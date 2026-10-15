@@ -1,0 +1,4 @@
+#$mg/lib/psplot/bhead	# fix by BM
+$mg/lib/psplot/bhead -i $1.ps
+cat bbox.ps $mg/lib/psplot/plot.ps $1.ps > $2.ps
+rm bbox.ps

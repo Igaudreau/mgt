@@ -1,0 +1,29 @@
+rtol 1E-4
+derefcrit 0.2
+refcrit 0.3
+diffbad 20
+screen
+react
+rho_0 4e5
+T_0 2e9
+hll
+START "Timmes hydrostatic iso45"
+   LEVELS 1
+   XYZ 1
+      X 1 -0.3 0.3 SYMMETRIC
+      SCALARS 46 ADVECT 46
+   CASE TIMMESHE
+END
+rat 0.0
+none
+hydrostatic
+isothermal
+rk2
+!dump
+!marker 0
+!$read x
+
+
+
+
+

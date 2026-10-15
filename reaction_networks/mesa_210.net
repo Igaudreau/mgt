@@ -1,0 +1,34 @@
+add_isos_and_reactions(
+   neut		     ! neutron
+   he 3 4	     ! helium
+   h  1 3            ! hydrogen   
+   li 6 7            ! lithium
+   be 7 9	     ! beryllium
+   b8                ! boron
+   b  10 11          ! boron   
+   c  11 14   	     ! carbon
+   n  13 15	     ! nitrogen
+   o  14 19  	     ! oxygen   
+   f  17 19          ! fluorine   
+   ne 18 23 	     ! neon
+   na 21 24 	     ! sodium   
+   mg 22 27 	     ! magnesium
+   al 25 28          ! aluminum
+   si 27 32	     ! silicon
+   p  29 34	     ! phosphorus
+   s  31 37    	     ! sulfur
+   cl 33 38          ! chlorine
+   ar 36 41	     ! argon
+   k  37 42          ! potassium
+   ca 40 49 	     ! calcium
+   sc 41 49	     ! scandium
+   ti 43 58 	     ! titanium
+   v  45 58	     ! vanadium
+   cr 48 60	     ! chromium
+   mn 51 61	     ! manganese
+   fe 52 61	     ! iron
+   co 55 65	     ! cobalt
+   ni 56 65          ! nickel
+   cu 57 66          ! copper
+   zn 60 69	     ! zinc
+   )

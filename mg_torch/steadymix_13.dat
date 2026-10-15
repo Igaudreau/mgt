@@ -1,0 +1,24 @@
+rtol 1E-4
+derefcrit 0.2
+refcrit 0.3
+diffbad 20
+screen
+noreact
+react tim13
+hll
+rho_0 2.0e5
+T_0 3.0e8
+START "1D Timmes Mix Hydrostatic test"
+   LEVELS 1
+   XYZ 1
+      X 1 -.0025 .0025 SYMMETRIC
+      SCALARS 14 ADVECT 13
+   CASE TIMMIX
+END
+msbdf
+hydrostatic
+isothermal
+order 1
+marker 1
+cn 1e6
+$read x

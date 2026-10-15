@@ -1,0 +1,29 @@
+#!/bin/tcsh -f
+#make libraries
+echo "Creating libraries"
+set dir=`pwd`
+cd $mg/lib/smp
+make
+mv *.a $mg/lib
+cd $mg/lib/parc
+which $mpi_CC > grot
+if ($status) then
+  echo "no mpi compiler " $mpi_CC ": making smp only"
+  make smp
+else
+  make both
+endif
+rm grot
+mv *.a $mg/lib
+cd $mg/lib/muvi
+make
+mv *.a $mg/lib
+cd $mg/lib/psplot
+g++ -o bhead plot.c
+cd $mg/lib/equilibrium-c/source
+make all
+mv *.a $mg/lib
+cp -f eqc.h $mg/src/eqc.h
+make clean
+cd $dir
+

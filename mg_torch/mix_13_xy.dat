@@ -1,0 +1,40 @@
+rtol 1e-3
+derefcrit 0.2
+refcrit 0.3
+diffbad 10
+screen
+react tim13
+!eos super
+rho_0 2e5
+T_0 3e8
+rho_s 9.728319e+05
+T_s 2.044069e+09
+START "1 dimensional mixed He detonation "
+   LEVELS 9
+   XYZ 2
+     X  40  0.0 5.0e8 SYMMETRIC-FREE
+     Y  8  0.0 1.0e8 SYMMETRIC     
+    SCALARS 14 ADVECT 14
+   CASE MIX_13_XY
+END
+rat 5e5
+kt
+dump
+marker 0
+msbdf
+cn 0.1
+cnf 0.1
+cns 0.1
+cns1 1e-4
+cns2 1e-4
+$read x
+
+
+
+
+
+
+
+
+
+

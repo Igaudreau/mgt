@@ -1,0 +1,38 @@
+rtol 1e-2
+derefcrit 0.2
+refcrit 0.3
+diffbad 10
+screen
+react mesa_46.net
+!setint
+!steady/mix_46_rho_2.0000e+05_T_3.00e+08_k_1.0000e-09_d_1.04060575485229
+!0.5e8
+!setint
+!steady/mix_46_rho_2.0000e+05_T_3.00e+08_k_1.0000e-07_d_0.73532638549805
+!grot 1.0e5
+setint mix_46_rho_2.0e+05_T_3.0e+08_k_1.0e-07 dns 7.6e6
+rho_0 2e5
+T_0 3e8
+slow
+START "1 dimensional mixed He detonation "
+   LEVELS 6
+   XYZ 2
+!     X 128  6e6 15.0e6 FREE
+!     Y 32 0.0 2.25e+06  FREE
+     X 512  6e6 11.12e6 FREE
+     Y 64 0.0 0.64e6  FREE             
+   SCALARS 47 ADVECT 47
+   CASE MIX_46_INIT
+END
+rat 1.0e5
+kt
+dump
+marker 0
+rk2
+cn 0.4
+cnf 0.5
+cns1 1e-4
+cns2 1e-4
+curv 1e-7
+solev 4
+$read x

@@ -1,0 +1,40 @@
+# parc/Makefile
+.SILENT:
+# Libraries
+
+# locations
+parc_obj=.
+compile=.
+
+#OBJECTS
+OBJ= \
+$(parc_obj)/parc.o \
+$(parc_obj)/dam.o  
+
+# Link parc
+all:	$(MAIN) $(OBJ)
+	echo "Creating parc$(MP).a library $(Lib_opts)"
+	rm -f parc$(MP).a
+	ar cr parc$(MP).a parc.o dam.o
+	rm *.o
+
+# MPI
+mpi:
+	make all MP="mpi" \
+		MP_CC="mpicc $(Lib_opts) -DPARC_MPI" \
+		MP_LIB=" " 
+
+# SMP
+smp:
+	make all MP="smp" MP_CC="$(C_comp) $(Lib_opts) -I$(smp)  \
+		-DPARC_SMP " \
+		MP_LIB="$(smp)/smp.a -lg2c" \
+		MP_LD="$(C_comp)" 
+
+both:
+	make mpi
+	make smp
+
+#COMPILE
+$(parc_obj)/parc.o: parc.c;  $(MP_CC) -c parc.c
+$(parc_obj)/dam.o: dam.c; $(MP_CC) -c dam.c

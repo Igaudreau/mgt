@@ -1,0 +1,29 @@
+rtol 1e-3
+derefcrit 0.2
+refcrit 0.3
+diffbad 20
+screen
+react mesa_46.net
+!rho_0 2e5
+!T_0 3e8
+rho_s 9.728319e+05
+T_s 2.044069e+09
+initintp townsley_ad
+START "2 dimensional mixed He detonation "
+   LEVELS 5
+   XYZ 2
+     X  40  -0.1e8 4.9e8 SYMMETRIC-FREE
+     Y  12  0.0 1.5e+08 SYMMETRIC-FREE
+   SCALARS 47 ADVECT 47
+   CASE MIX_SHELL
+END
+rat 5e5
+hll
+dump
+marker 0
+msbdf
+cn 0.1
+cnf 0.1
+cns1 1e-4
+cns2 1e-4
+$read x

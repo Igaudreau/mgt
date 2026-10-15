@@ -1,0 +1,133 @@
+#!/bin/tcsh -f
+#make mg_torch
+  if($# < 1) then
+    echo "Usage: makemg smp | mpi"
+  else
+    echo "making mg_torch"
+    set dir=`pwd`
+    tar -xvf cjdet_updated.tar.gz
+    cd $dir/cjdet
+    gfortran -o cjdet.exe cjdet.f90
+    cd $dir
+    tar -xvf helm_table.bin.tar.gz
+    tar -xvf helm_table.dat.tar.gz
+    tar -xvf torch_helm_table.tar.gz
+    if (-f ../src/usr.c) then
+      diff --brief ./usr.c ../src/usr.c > ../src/grot
+      set test=$status
+    else
+      set test=1
+    endif
+    if ($test) then
+      echo "copying usr.c"
+      cp ./usr.c ../src/usr.c
+    endif
+    if (-f ../src/march.c) then
+      diff --brief ./march.c ../src/march.c > ../src/grot
+      set test=$status
+    else
+      set test=1
+    endif
+    if ($test) then
+      echo "copying march.c"
+      cp ./march.c ../src/march.c
+    endif
+    if (-f ../src/grid.c) then
+      diff --brief ./grid.c ../src/grid.c > ../src/grot
+      set test=$status
+    else
+      set test=1
+    endif
+    if ($test) then
+      echo "copying grid.c"
+      cp ./grid.c ../src/grid.c
+    endif
+    if (-f ../src/start.c) then
+      diff --brief ./start.c ../src/start.c > ../src/grot
+      set test=$status
+    else
+      set test=1
+    endif
+    if ($test) then
+      echo "copying start.c"
+      cp ./start.c ../src/start.c
+    endif
+    if (-f ../src/para.c) then
+      diff --brief ./para.c ../src/para.c > ../src/grot
+      set test=$status
+    else
+      set test=1
+    endif
+    if ($test) then
+      echo "copying para.c"
+      cp ./para.c ../src/para.c
+    endif
+    if (-f ../src/user.h) then
+      diff --brief ./user.h ../src/user.h > ../src/grot
+      set test=$status
+    else
+      set test=1
+    endif
+    if ($test) then
+      echo "copying user.h"
+      cp ./user.h ../src/user.h
+      if (-f ../src/linux/usr.o) then
+        rm ../src/linux/usr.o
+        rm ../src/linux/mg.o
+      endif
+    endif
+    if (-f ../src/modelrw.c) then
+      diff --brief ./modelrw.c ../src/modelrw.c > ../src/grot
+      set test=$status
+    else
+      set test=1
+    endif
+    if ($test) then
+      echo "copying modelrw.c"
+      cp ./modelrw.c ../src/modelrw.c
+    endif
+    if (-f ./struct.h) then
+      diff --brief ./struct.h ../src/struct.h > ../src/grot
+      set test=$status
+    else
+      set test=1
+    endif
+    if ($test) then
+      echo "copying struct.h"
+      cp ./struct.h ../src/struct.h
+      if (-f ../src/linux/main.o) then
+        rm ../src/linux/*.o
+      endif
+    endif
+    if (-f ../src/adi.c) then
+      diff --brief ./adi.c ../src/adi.c > ../src/grot
+      set test=$status
+    else
+      set test=1
+    endif
+    if ($test) then
+      echo "copying adi.c"
+      cp ./adi.c ../src/adi.c
+    endif
+    if (-f ../src/mg.c) then
+      diff --brief ./mg.c ../src/mg.c > ../src/grot
+      set test=$status
+    else
+      set test=1
+    endif
+    if ($test) then
+      echo "copying mg.c"
+      cp ./mg.c ../src/mg.c
+    endif
+    if (-f grot) then
+      rm grot
+    endif
+    cd ../src
+    make $1
+    if ( ! -d $dir/bin ) then
+      mkdir $dir/bin
+    endif
+    mv linux/mg $dir/bin/mg_torch
+    cd $dir
+  endif
+

@@ -1,0 +1,12 @@
+avisp 0.2
+avise 0.2
+rtol 1E-3
+abstol 1E-4
+gslatol 1E-5
+gslrtol 1E-8
+ztol 1E-3
+ptol 1E-3
+diffbad 20
+refcrit 0.1
+derefcrit 0.05
+

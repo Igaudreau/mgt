@@ -1,0 +1,45 @@
+# Save location for all versions
+export mg_g_data=./data
+
+# Set the path for each version here
+PATH=$mg/mg_torch/bin:$mg/mg_cti/bin:$mg/mg_2p/bin:$mg/mg_g/bin:$mg/mg_lem/bin:./bin:$mg/lib/psplot:.:$PATH
+export PATH
+
+export X11_libs=-lX11
+
+# Set the compilers here
+export C_comp=gcc
+export CPP_comp=g++
+export F77_comp=gfortran
+#export mpi_CC=mpicxx
+export mpi_CC=mpicc
+
+# Suggest double precision for MG_2P, MG_CTI, MG_4S, MG_SN1A, MG_H2
+# all others should be fine in single mode
+#export PRECISION=-DSINGLE
+export PRECISION=-DDOUBLE
+
+# Compiler options
+# Optimized mode with warnings supressed use -w
+# Note O3 compiles a slightly faster code compared to O2, but may not be as stable
+# In that sense O2 is more strict to ensure code stability
+# Ofast is -O3 and -ffast-math, which is fastest but violates IEEE and C++ standards
+# Can add -fopt-info-vec-optimized to output compilation optimization details
+#
+export Comp_opts="$PRECISION -O3 -Wall"
+export system="-lreadline -lncurses -lpthread -lgsl -lgslcblas -lm -lstdc++"
+
+# Debugging mode TODO uncomment these two lines if you wish to debug your code
+#export Comp_opts="$PRECISION -pg -g -ggdb3 -Wall"
+#export system="-pg -ggdb3 -lreadline -lncurses -lpthread -lgsl -lgslcblas -lm -lstdc++"
+
+
+# Other compiler specific flags
+export C_opts="-std=gnu99"
+export CPP_opts="-std=c++11"
+export Fortran_opts="-O3 -std=legacy"
+
+
+MUVI_FONT_TABLE=$mg/lib/muvi.fonts
+
+

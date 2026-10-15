@@ -1,0 +1,94 @@
+##############
+Installation:
+##############
+
+To install bash version, first add the following lines to $HOME/.bashrc file (assuming mg has been downloaded to ~/mg):
+export mg=~/mg
+source $mg/_bashrc
+
+Then source the .bashrc by opening a new window, or 
+cd $HOME
+source .bashrc
+
+Then, edit the $mg/_bashrc file as needed.  Note, there is also a _cshrc if you plan
+to install using tcsh (or mac?).
+
+Compile with:
+cd $mg
+Createlib
+
+Finally, navigate to the MG program you wish to compile:
+cd $mg/mg_g
+makemg mpi
+
+
+#####################
+MG Versions included
+#####################
+
+The different subfolders (mg programs) included in this version of MG are as follows:
+
+mg_g:
+  This is mg_g but with internal boundaries based on fluid variable iqbd, and an LES (LKM) model.  It can plot density gradients and vorticity.  It can also polulate initial conditions from a file.  It also has included Roe's method.
+  ***Creating new mg versions are always best to be based off this version
+Can be compiled in single or double prescision
+
+mg_lem:
+  Calorically perfect gas with one, and 3 step combustion.  This is the only version that has the CLEM-LES model (only for one-step combustion).  Can be compiled in single or double prescision
+
+mg_cti:
+  Detailed chemistry version.  Reads cti files.  Variable Cv,Cp.  uses integer-based flags for internal geometry.
+Compile with double prescision only
+
+mg_torch:
+  MG with supernova equation of state and fusion reactions.  It has 8-isotope, 13-isotope, and torch reaction model.
+Compile with double prescision only
+
+mg_2p:
+  Two phase flow version using NASG equation of state.  Also uses the 4-step combustion model of Boivin for H2 chemistry but with constant Cv,Cp in the NASG framework. Compile with double prescision only
+
+
+
+
+SOME NOTES
+mg_cti has some syntax specifc for the integer based solid body system in modelrw.c and para.c and march.c.  It uses a different para.c and march.c.  All other versions use the same march.c
+
+In the individual mg program (i.e. mg_g) folders:
+para.c: has 4 different versions - solidbody work contributions
+solidbody(int based):  mg_4s mg_cti
+solidbody(float based):  mg_g mg_2p
+no solidbody:  mg_torch
+lem specific version:  mg_lem
+
+modelrw.c: has 3 versions
+mg_cti uses its own version because of solidbody(int)
+mg_lem uses its own for LEM specific functions
+mg_g mg_torch mg_2p are using the original version
+
+march.c: 2 versions
+mg_g mg_lem mg_torch mg_2p all have same march.c
+mg_cti uses its own, due to solidbody(int) stuff
+
+start.c: 3 versions
+mg_g mg_lem mg_2p all have same start.c
+mg_torch has its own because eventually number of scalars should be automatically calculated here
+mg_cti has its own because number of scalars is automatically calculated here and due to solidbody(int)
+
+grid.c: 3 versions
+mg_g mg_2p mg_torch have the same
+mg_cti has its own, due to solidbody(int) and adi method
+mg_lem has its own because it needs to destroy lem parts on derefinement
+
+----------------------------------
+TODO list
+
+---------------------
+
+
+1.  Add checks for solidbody in all versions:  Reduces start.c to 3 versions, march.c to 1 version
+       -- maybe it would be good to implement both float based and int based solidbody.
+2.  Develop consistent test cases / documentations across versions
+3.  Implement solidbody in mug.c - implement in void init_imp_mug function
+4.  Implement Sam's calculation for nsub in usrgsl for all versions, based on the estimated ydot
+
+

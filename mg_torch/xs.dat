@@ -1,0 +1,32 @@
+$echo
+sky 0.8 0.9 1.0
+paper 5.0 5.0
+rposition 1.0 1.0
+open a x
+$read p
+nomaterials
+material_red redwood 1.0
+material_green redwood 0.5
+material_blue redwood 0.5
+material_red greenwood 0.5
+material_green greenwood 1.0
+material_blue greenwood 0.5
+notags
+tag metal redwood
+tag tin greenwood
+light_altd 45
+light_azim 200
+view_altd 30
+view_azim 190
+light_fusion 0.3
+ncolour 8
+nshade 8
+data_ortho 2
+ncolour 32
+nocontour
+selectw whole
+view_focus 0.0 0.0 -10.6
+view_azim 30
+light_azim 45
+view_altd 60
+$echo

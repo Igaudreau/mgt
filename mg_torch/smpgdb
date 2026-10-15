@@ -1,0 +1,45 @@
+#!/bin/tcsh
+# smpgdb  -npe=<n> program <args>? (a bit hard wired)
+#
+# Some unique identifier for the process running this?
+   setenv WINDOWID `xdotool getactivewindow`	# line added to get WINDOWID in case its missing
+   setenv SMP_ID $WINDOWID
+   if    ($# < 2) then
+      echo "usage:  smpgdb -npe=<n> <program> <args>"
+   else
+      mkdir -p .smp
+      rm -rf .smp/$SMP_ID
+      mkdir -p .smp/$SMP_ID
+      ls -R .smp/$SMP_ID
+      cp gdb.cmd .smp/$SMP_ID/gdb.run.0
+      cp gdb.cmd .smp/$SMP_ID/gdb.run.1
+      cp gdb.cmd .smp/$SMP_ID/gdb.run.2
+      cp gdb.cmd .smp/$SMP_ID/gdb.run.3
+      cp gdb.cmd .smp/$SMP_ID/gdb.run.4
+      cp gdb.cmd .smp/$SMP_ID/gdb.run.5
+      cp gdb.cmd .smp/$SMP_ID/gdb.run.6
+      cp gdb.cmd .smp/$SMP_ID/gdb.run.7
+      cp gdb.cmd .smp/$SMP_ID/gdb.run.8
+      cp gdb.cmd .smp/$SMP_ID/gdb.run.9
+      cp gdb.cmd .smp/$SMP_ID/gdb.run.10
+      cp gdb.cmd .smp/$SMP_ID/gdb.run.11
+      cp gdb.cmd .smp/$SMP_ID/gdb.run.12
+      echo "run  $1 $3 $4 $5 $6 $7 $8 -mype=0 -debug -smpid=$SMP_ID" >>.smp/$SMP_ID/gdb.run.0
+      echo "run  $1 $3 $4 $5 $6 $7 $8 -mype=1 -debug -smpid=$SMP_ID" >>.smp/$SMP_ID/gdb.run.1
+      echo "run  $1 $3 $4 $5 $6 $7 $8 -mype=2 -debug -smpid=$SMP_ID" >>.smp/$SMP_ID/gdb.run.2
+      echo "run  $1 $3 $4 $5 $6 $7 $8 -mype=3 -debug -smpid=$SMP_ID" >>.smp/$SMP_ID/gdb.run.3
+      echo "run  $1 $3 $4 $5 $6 $7 $8 -mype=4 -debug -smpid=$SMP_ID" >>.smp/$SMP_ID/gdb.run.4
+      echo "run  $1 $3 $4 $5 $6 $7 $8 -mype=5 -debug -smpid=$SMP_ID" >>.smp/$SMP_ID/gdb.run.5
+      echo "run  $1 $3 $4 $5 $6 $7 $8 -mype=6 -debug -smpid=$SMP_ID" >>.smp/$SMP_ID/gdb.run.6
+      echo "run  $1 $3 $4 $5 $6 $7 $8 -mype=7 -debug -smpid=$SMP_ID" >>.smp/$SMP_ID/gdb.run.7
+      echo "run  $1 $3 $4 $5 $6 $7 $8 -mype=8 -debug -smpid=$SMP_ID" >>.smp/$SMP_ID/gdb.run.8
+      echo "run  $1 $3 $4 $5 $6 $7 $8 -mype=9 -debug -smpid=$SMP_ID" >>.smp/$SMP_ID/gdb.run.9
+      echo "run  $1 $3 $4 $5 $6 $7 $8 -mype=10 -debug -smpid=$SMP_ID" >>.smp/$SMP_ID/gdb.run.10
+      echo "run  $1 $3 $4 $5 $6 $7 $8 -mype=11 -debug -smpid=$SMP_ID" >>.smp/$SMP_ID/gdb.run.11
+      echo "run  $1 $3 $4 $5 $6 $7 $8 -mype=12 -debug -smpid=$SMP_ID" >>.smp/$SMP_ID/gdb.run.12
+#     xterm -fg black -bg yellow -fn 7x13bold -e gdb   \
+#       --command=.smp/$SMP_ID/gdb.run.0 $2 &
+      gdb   -quiet --command=.smp/$SMP_ID/gdb.run.0 $2 
+      killall -q gdb
+   endif
+# end

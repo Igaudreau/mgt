@@ -1,0 +1,1016 @@
+?$LOG
+ $LOG logfile
+ $NOLOG
+ 
+   The $LOG command causes a  file "logfile.log" to be created and all
+   command input  to be echoed  on that file.   Unfortunately, printed
+   output  cannot be  duplicated  on that  file.   The $NOLOG  command
+   closes any log file.
+
+?-
+?COMMANDS
+
+   In the MUVI  system commands are keywords followed  by zero, one or
+   more parameters.   No distinction is  made between upper  and lower
+   case, and you can type numbers in free format.
+
+?-
+?FONT
+ FONT fontstyle fontsize
+
+   This command  attempts to select the  style and size of  font to be
+   used; however, it is limited by those supported by the device.  The
+   "fontstyle" parameter  defaults to "Screen", and  can take optional
+   values "Courier" and "Times";  others will be supported later.  The
+   "fontsize" parameter  is measured in screen pixels  (e.g. 1/72 inch
+   on PostScript, 0.01 inch on SGI).
+
+?-
+?GRIDMODEL
+
+   A  Grid model consists  one or  more time  frames, with  each frame
+   being  a 1-,2-  or  3-dimensional array  containing solution  data.
+   These  models are  generally created  from an  application  such as
+   COBRA, but can also be written to and read from files
+
+?-
+?MODELS
+
+   Models  can either represent  Fluid or  Solid datasets.   The Fluid
+   datasets are divided into two categories: Grid and Scatter.
+
+?-
+?SCATTERMODEL
+
+   A Scatter model  consists one or more time  frames, with each frame
+   consisting a list of solution  points defined in 1-,2- or 3-dimens-
+   -ional space.
+
+?-
+?SOLIDMODEL
+
+   A  Solid model  consists one  or  more groups  of solid  primitives
+   (spheres, cylinders, blocks, etc.), defined in 3-dimensional space.
+   Each  group is  identified  by a  "tag"  which can  be mapped  onto
+   material properties at the time of display.
+
+?-
+?XWINDOWS
+
+   The OPEN  command supports a  range of XWindows device  types.  The
+   general form of the device name is X_cmap_cmethod.  where "cmap" is
+   one of MY, CLONE or DEF, and "cmethod" is one of RGB,HSV,HV,CMAP.
+
+   "cmap"  determines how  MUVI  uses the  colourmap  resource of  the
+   display.  MY means that MUVI attempts to create a new colourmap for
+   its exclusive  use.  On displays with a  single hardware colourmap,
+   this will cause  "flashing" as the mouse pointer  is moved from one
+   window  to another.   CLONE means  that MUVI  takes a  copy  of the
+   prevailing default  colourmap, and  uses the remaining  free colour
+   slots for its  own purpose.  This should reduce  the probability of
+   "flashing".
+
+   DEF  means that  the actual  default colourmap  is used,  with MUVI
+   adding in its own colours.  This will normally work on any display,
+   but  is unfriendly  to other  programs  which may  use the  default
+   colourmap.
+
+   "cmethod"  determines how MUVI  arranges its  colours, and  has the
+   effect  of enhancing  (say)  solid shading  or  colour contours  on
+   displays with a restricted number  of colours.  RGB means that MUVI
+   arranges the  colours in an RGB  cube; this is  the most democratic
+   approach, but  may not produce  very good shaded surfaces.   HSV is
+   better for  pure and pastel surface  shading.  HV is  good for pure
+   shaded surfaces and colour  contours.  CMAP allows MUVI to allocate
+   any  number of  shading and  colour  values for  a given  activity,
+   subject to those available.
+
+   The best way to choose a suitable device is to try them and see.
+
+   In order  for an  X window to  be created, the  DISPLAY environment
+   variable must be defined with the form
+
+      setenv DISPLAY machine:0
+
+   where "machine" is the hostname of the display machine.
+?-
+?XFONTS
+
+   There is  no standard for  the text fonts  that are available  on a
+   given display.  However, there is a mechanism for mapping the names
+   and sizes of  fonts in the FONT command  to actual fonts associated
+   with the display.   This mapping is done by  a text file containing
+   lines of the form:
+
+      font_style font_size font_name
+
+   where "font_style"  and "font_size" are the parameters  to the FONT
+   command, and are chosen by the user, and "font_name" is the name of
+   a font as indicated by the "xlsfonts" command.  For example:
+
+      Roman 12 variable
+      Courier 12 fixed
+
+   The  name of  this file  is either  defined by  the MUVI_FONT_TABLE
+   environment variable,  or else in the local  file "muvi.fonts".  If
+   missing, a default font will always be available.
+
+   Note that the fonts are  available from the Display you are sitting
+   in  front of,  rather than  the computer  on which  the  program is
+   running ?- ?POSTSCRIPT The OPEN  command supports the PS and PS_RGB
+   device types.  The PS device  is for monochrome printers; PS_RGB is
+   for colour printers or for grey-scales.
+
+   The OPEN  command creates a file with  name <worksurface>.ps, which
+   must be prefixed by a "plot.ps"  header file before being sent to a
+   printer.   Some modification  of the  ".ps" file  may be  needed to
+   insert the plot into a document.
+
+?-
+?ARROW
+ ARROW
+
+   This command  specifies that vector  fields are to be  displayed as
+   arrow maps.  It negates the effect of the STREAM command.
+
+?-
+?BAND
+ BAND
+ NOBAND
+
+   The BAND command specifies  that 2-dimensional scalar fields are to
+   be displayed as colour range maps; NOBAND avoids these.  Bands with
+   indicies 0, 1  and 2 are allows, with scalar  ranges defined by the
+   BANDR command,  and revoked by  the NOBANDR command.   BAND removes
+   the effect of COLOUR and CONTOUR.
+
+?-
+?BANDR
+ BANDR band_index qmin qmax
+ NOBANDR
+
+   The BANDR command  specifies the scalar range "qmin"  to "qmax" for
+   the band with index "band_index"; the NOBANDR removes this.
+
+?-
+?BINARY_DATA
+ BINARY_DATA
+
+   This command toggles between text  and binary mode for writing MUVI
+   (etc.) files.  The default is binary.
+
+?-
+?BOX
+ BOX
+ NOBOX
+
+   The BOX  command specifies that graph  axes are to  be designed and
+   draw  for each  plotting  instruction (P,  V,  etc.); NOBOX  allows
+   subsequent  plotting instructions  to cause  overlaid  graphs where
+   this is sensible.
+
+?-
+?CA
+ CA
+
+   This command is only useful on terminals such as the Pericom MG and
+   MX  series which support  separate alpha  and graphic  screens.  It
+   prints  24 blank  lines and  then waits  for the  user to  type the
+   RETURN key.   It effectively clears the scrolling  alpha screen and
+   lets you see the overlay graphics.  ?- ?CAPTION CAPTION CaptionText
+   NOCAPTION
+
+   This command  specifies a new  caption line for any  future graphs.
+   The number of  caption lines that can be  displayed is specified by
+   the  CAPTION_LINES command.  You  can reset  the caption  and start
+   again with NOCAPTION.
+
+?-
+?CAPTION_ABOVE
+ CAPTION_ABOVE
+
+   This command specifies that captions are to be drawn above the next
+   graph.  It negates the effect of CAPTION_BELOW.
+
+a
+?-
+?CAPTION_BELOW
+ CAPTION_BELOW
+
+   This command specifies that captions are to be drawn below the next
+   graph.  It negates the effect of CAPTION_ABOVE.
+
+?-
+?CAPTION_INSET
+ CAPTION_INSET CaptionInset
+
+   This command specifies the size  of the left margin for the caption
+   measured in character widths.
+
+?-
+?CAPTION_LINES
+ CAPTION_LINES CaptionLines
+
+   This command  specifies the  number of caption  lines which  can be
+   stored with the  CAPTION command and displayed on  graphs.  A value
+   of zero means that no space is reserved for captions on the graph.
+
+?-
+?CLEAR
+ CLEAR
+
+   This  command   erases  the  current   worksurface,  including  all
+   subwindows contained on it.
+
+?-
+?CLOSE
+ CLOSE Worksurface
+
+   This command closes the worksurface identified by "WorkSurface"
+
+?-
+?CLOSEW
+ CLOSEW subwin
+
+   This  command closes  (deletes) a  subwindow.  If  it  is currently
+   selected, then the base window ("whole") is selected in its place.
+
+?-
+?COLOUR
+ COLOUR
+ NOCOLOUR
+
+   The COLOUR  command specifies that 2-dimensional  scalar fields are
+   to be displayed as colour  maps; NOCOLOUR avoids these.  The colour
+   gradation is controlled by the NCOLOUR command.
+
+?-
+?CONT
+ CONT ContourLevel
+
+   This  command specifies  a single  contour level.   It  removes the
+   effect of CONTS and NCONT commands.
+
+?-
+?CONTS
+ CONTS ncont ContourLevels[1..ncont]
+
+   This  command  specifies  "ncont"  individual contour  levels.   It
+   removes the effect of the CONT and NCONT commands.
+
+?-
+?CONTOUR
+ CONTOUR
+ NOCONTOUR
+
+   The CONTOUR command specifies  that 2-dimensional scalar fields are
+   to be displayed as contour maps; NOCONTOUR avoids this.
+
+?-
+?CONTOUR_LABEL
+ CONTOUR_LABEL
+ NOCONTOUR_LABEL
+
+   These  commands toggle  whether  contours are  labelled with  their
+   indicies.
+
+?-
+?DATA_COORD
+ DATA_COORD position
+NODATA_COORD
+
+   This  commands specifies  the coordinate  position for  the cutting
+   plane for a DATA_ORTHO scalar plot in 3D.
+
+?-
+?DATA_FRAME
+ DATA_FRAME
+ NODATA_FRAME
+
+   These  commands determine  whether  a  space frame  is  drawn on  a
+   3-dimensional picture.
+
+?-
+?DATA_SHADE
+ DATA_SHADE
+
+   This command selects data shading  of solid surfaces as effected in
+   3-dimensional versions of the P command.  It negates the DATA_ORTHO
+   command.
+
+?-
+?DATA_ORTHO
+ DATA_ORTHO id
+
+   This  command   selects  data  planes   to  be  colour   shaded  in
+   3-dimensional versions of the P command.  It negates the DATA_SHADE
+   command.
+
+?-
+?ER
+ ER
+
+   This  command erases  the  current subwindow,  including any  graph
+   contained in it.
+
+?-
+?EXPORT
+ EXPORT filename
+
+   After this command  has been issued, the graphics  file is exported
+   to filename.xq  as a text file  when the P command  is issued. This
+   file can then be plotted with the READXQ command.  The graph is not
+   plotted. Subsequent P commands plot as usual. Note that it will not
+   overwrite an existing file.
+
+?-
+?G
+ G
+
+   This command causes  the grid associated with the  current model to
+   be displayed.
+
+?-
+?GREY_RAIN
+ GREY_RAIN
+ NOGREY_RAIN
+
+   This  command specifies that  colour maps  use s  linear grey-scale
+   rather than  a "rainbow".  This is helpful  when producing pictures
+   for monochrome printers.
+
+?-
+?HBORDER
+ HBORDER bord
+
+   This  command  specifies  a  fractional border  in  the  horizontal
+   direction for a graph within a subwindow.
+
+?-
+?HELP
+ HELP topic
+
+   This command obtains help text  on the chosen "topic".  If you want
+   to find out about available topics, type: HELP TOPICS
+
+?-
+?HSURF
+ HSURF height
+
+   This command selects the relative  height of the vertical extent in
+   a scalar surface plot: q[x,y].  Default is 0.5 .
+
+?-
+?KEY
+ KEY
+ NOKEY
+
+   These  commands toggle  whether a  key is  drawn  for 1-dimensional
+   graphs.
+
+?-
+?KEY_LABEL
+ KEY_LABEL label
+ NOKEY_LABEL
+
+   These commands select or revoke the label to be associated with the
+   next key entry for a 1-dimensional graph.
+
+?-
+?KEY_LABEL_FIELD
+ KEY_LABEL_FIELD field
+
+   This specifies  the maximum number of  characters for a  label in a
+   Key.
+
+?-
+?KEY_NUMBER_FIELD
+ KEY_NUMBER_FIELD field
+
+   This specifies the  maximum number of characters in  a number field
+   in a Key.
+
+?-
+?KEY_SIZE
+ KEY_SIZE size
+
+   This command specifies the number of entries (lines) in a Key.
+
+?-
+?LABEL_FIELD
+ LABEL_FIELD field
+
+   This command  specifies the maximum  field width for  graph labels.
+   It is used in axis placement.
+
+?-
+?LIGHT_ALTD
+ LIGHT_ALTD altd
+
+   This  command  specifies the  altitudinal  angle  (degrees) of  the
+   light-point seen from the view-focus.
+
+?-
+?LIGHT_AZIM
+ LIGHT_AZIM azim
+
+   This  command  specifies  the  azimuthal  angle  (degrees)  of  the
+   light-point seen from the view-focus.
+
+?-
+?LIGHT_DISTANCE
+ LIGHT_DISTANCE distance
+ NOLIGHT_DISTANCE
+
+   The   LIGHT_DISTANCE  command   specifies  the   distance   of  the
+   light-point  from  the  view-focus;  the  NOLIGHT_DISTANCE  command
+   removes this.
+
+?-
+?LIGHT_FUSION
+ LIGHT_FUSION fusion
+
+   This command specifies what fraction of the light intensity (at the
+   view-focus) is diffuse; the remainder  is expected to come from the
+   light-point.
+
+?-
+?LINE
+ LINE LineIndex
+ NOLINE
+
+   The LINE command specifies the  line style index for scalar graphs.
+   By default the  line style index is 1,  which corresponds to solid;
+   other line  styles are device  specific.  The NOLINE  command means
+   that no connecting lines are drawn between points on a graph.
+
+?-
+?LINE_PALET
+ LINE_PALET PaletIndex
+
+   This  selects a  colour PaletIndex  (in the  range 1  to  7), which
+   determines the  colour of lines  and markers drawn  (initially only
+   1-dimensional  scalar graphs).   The current  RGB settings  for the
+   palet are  printed by the VSHOW  command, and you  can modify these
+   with the PALET command.
+
+?-
+?LOG
+ LOG
+ NOLOG
+
+   These commands toggle whether  scalars are converted to LOG10 prior
+   to plotting.
+
+?-
+?MARKER
+ MARKER MarkerIndex
+ NOMARKER
+
+   The MARKER  command specifies the  marker index for  scalar graphs.
+   Indices in the  range 1 to 4 are  supported, independent of device.
+   The NOMARKER command avoids drawing markers at data points.
+
+?-
+?MARK_SCALE
+ MARK_SCALE MarkerScale
+
+   This command  specifies the marker  size in terms of  the character
+   height.
+
+?-
+?MASK
+ MASK Coord Position
+
+   This  command specifies  that the  number of  dimensions of  a Grid
+   model is to be reduced for display by fixing the "Coord" coordinate
+   at "Position" in that direction.   Its effect can be removed by the
+   UNMASK command.
+
+?-
+?MASKI
+ MASKI Coord ArrayOffset
+
+   This command specifies that the  the number of dimensions of a Grid
+   model is to be reduced for display by fixing the "Coord" coordinate
+   direction at array offset "ArrayOffset".  Its effect can be removed
+   by the UNMASK command.
+
+?-
+?MATERIAL
+ MATERIAL material RGB red green blue END
+ NOMATERIALS
+
+   The MATERIAL  command introduces the  diffuse reflective properties
+   of  a named  material.  The  elaborate  syntax is  to allow  future
+   additions.  NOMATERIALS removes all  materials except the one named
+   "DEFAULT".
+
+?-
+?MATERIAL_colour
+ MATERIAL_RED material red
+ MATERIAL_GREEN material green
+ MATERIAL_BLUE material blue
+
+   These commands specify the reflection coefficient for a Material in
+   Red,  Green  or  Blue.  If  the  Material  is  new, it  is  created
+   dynamically and assigned default properties.
+
+?-
+?NCOLOUR
+ NCOLOUR ncolour
+
+   This command specifies  the number of colour gradations  to be used
+   in scalar colour maps.
+
+?-
+?NCONT
+ NCONT ncont
+
+   This command  specifies the number  of contour levels which  are to
+   cover the scalar range; it removes the effect of CONT and CONTS.
+
+   See also:  CONT, CONTS.
+
+?-
+?NSHADE
+ NSHADE nshade
+
+   This  command selects  the  number of  colour  gradations used  for
+   light-shading.   Note that  in  light-data shading  models on  8bit
+   devices, the product NCOLOUR*NSHADE may be limited to about 100.
+
+?-
+?NUMBER_FIELD
+ NUMBER_FIELD field
+
+   This  command  specifies the  maximum  number  of  characters in  a
+   numeric field; used to design axis placement.
+
+?-
+?OPEN
+ OPEN WorkSurface DeviceType
+
+   This command opens a graphics worksurface of type "DeviceType" with
+   user-supplied name "WorkSurface".  The "DeviceType" is from:
+
+     PS*     Postscript (various)
+     X*      XWindows (various)
+
+   The newly opened worksurface is selected as active.
+
+?-
+?OPENW
+ OPENW subwin hmin hmax vmin vmax
+
+   This  command  opens  a  subwindow  on the  current  graphics  work
+   surface, with name "subwin" and fractional extents "hmin" to "hmax"
+   and  "vmin" to  "vmax" in  the horizontal  and  vertical directions
+   respectively.   A  subwindow is  automatically  selected after  its
+   creation.
+
+   When a worksurface is opened,  a "base" subwindow called "whole" is
+   created, filling the entire worksurface.
+
+?-
+?P
+ P
+
+   This command  causes the scalar  field associated with  the current
+   fluid model  to be  displayed.  The field  value are  calculated as
+   specified by the PLOT command.  The method of display is controlled
+   by various options such as COLOUR, CONTOUR, BAND.
+
+?-
+?PALET
+ PALET PaletIndex red green blue
+
+   This command  allows you to change  the mix of red,  green and blue
+   (all in range  0.0 to 1.0), for a given entry  in the colour palet.
+   The PaletIndex is in the range 1 to 7.  The current settings can be
+   seen with the VSHOW command.
+
+?-
+?PAPER
+ PAPER Hinch Vinch
+
+   This command specifies the horizontal and vertical size of the next
+   worksurface opened  by OPEN,  as measured in  inches.  It  only has
+   effect on workstations and plotters where this is supported.
+
+?-
+?POSITION
+ POSITION Hinch Vinch
+
+   This  command specifies  the  precise position  of the  bottom-left
+   corner of  the next worksurface to  be opened.  It  applies only to
+   workstations and plotters which support this.
+
+?-
+?Q
+ Q
+   This command terminates executaion of the program.
+?-
+?QLABEL
+ QLABEL qlabel
+ NOQLABEL
+
+   The  QLABEL command  specifies  a label  for  the displayed  scalar
+   quantity; NOQLABEL removes this.
+
+?-
+?QR
+ QR qmin qmax
+ NOQR
+
+   The QR command  specifies the minimum and maximum  scalar values to
+   be plotted.  The NOQR command removes the effect of this.
+
+?-
+?READXQ
+ READXQ filename
+
+   The READQ command reads a text file filename.xq containing data and
+   plots it. For one dimensional data the file should be of the form
+
+     1
+     title
+     x y
+     x_1 y_1
+     .
+     .
+
+   where title is the  title (no spaces), x, y are the  names of the x
+   and y  coordinates, x_1, y_1  etc are the  x, y coordinates  of the
+   data points.
+
+   For two dimensions, the file should be of the form
+
+     nd nl1 nl2 ..
+     title
+     x y var_name
+     x_1    y_1 var_value
+     x_2    y_1 var_value
+     .
+     x_nl1  y_1 var_value
+     x_1    y_2 var_value
+     .
+
+   where nd  is the number of  dimensions, nl1, nl2 are  the number of
+   points in the x, y directions (nl1xnl2 matrix), title is the title,
+   x,  y are  the coordinate  names and  var_name is  the name  of the
+   variable.   The coordinates of  the data  points must  be uniformly
+   spaced with the x  coordinate varying most rapidly. The arrangement
+   for three dimensions is similar. The EXPORT command produces a file
+   of this type.
+
+?-
+?RPAPER
+ RPAPER Hsize Vsize
+
+   This command specifies the relative size of the next worksurface to
+   be  opened  by  the  OPEN  command.  This  only  applies  to  work-
+   -stations and plotters where this is supported.
+
+?-
+?RPOSITION
+ RPOSITION Hrel Vrel
+
+   This  command specifies  the relative  position of  the  next work-
+   surface to be opened by  OPEN.  It only applies to workstations and
+   plotters  where this  is supported.   Values  of 0.0  mean Left  or
+   Bottom, whilst values of 1.0 mean Right or Top, as appropriate.
+
+?-
+?S
+ S
+
+   This command  causes the current  solid model to be  displayed.  At
+   present a ray-trace method is employed.
+
+?-
+?SCALES
+ SCALES
+ NOSCALES
+
+   These commands toggle whether a  box containing scales is drawn for
+   colour, contour plots (etc.).
+
+?-
+?SCALP
+ SCALP
+ NOSCALP
+
+   These commands toggle whether a 2-dimensional scalar field is drawn
+   as a surface.  That is, the scalar is promoted to a coordinate.
+
+?-
+?SELECT
+ SELECT WorkSurface
+
+   This command selects the named "WorkSurface" to be active and hence
+   receive future display output.
+
+?-
+?SELECTW
+ SELECTW subwin
+
+   This command selects a named subwindow for drawing.
+
+?-
+?SKY
+ SKY red green blue
+
+   This command specifies  the red, green and blue  intensities of the
+   background sky (values in range 0.0 to 1.0).
+
+?-
+?STREAM
+ STREAM n x y z dx dy dz
+
+   The  STREAM  command  spceifies  that  velocity fields  are  to  be
+   displayed by means of streamlines.
+
+   The starting points for streamlines are chosen from the
+   expression [x+i*dx,y+i*dy,z+i*dz], for (i=0,n-1), where
+   [x,y,z] are the model coordinates.
+
+?-
+?TAG
+ TAG tag material
+ NOTAGS
+
+   The TAG  command makes an  association between a solid  model "tag"
+   and a "material"; NOTAGS removes all such associations.
+
+?-
+?TICK_SCALE
+ TICK_SCALE scale
+
+   This command specifies  the size of axis ticks  relative to current
+   character height.   Negative values mean that the  ticks point into
+   the graph.
+
+?-
+?TLABEL
+ TLABEL tlabel
+ NOTLABEL
+
+   The  TLABEL  command  specifies  a  label for  the  displayed  time
+   coordinate; NOTLABEL removes this.
+
+?-
+?TR
+ TR tmin tmax
+ NOTR
+
+   The TR command specifies the  minimum and maximum time values to be
+   displayed; NOTR removes this.
+
+?-
+?UNMASK
+ UNMASK coord
+
+   This command  removes a coordinate  masks specified by the  MASK or
+   MASKI commands.   In this, "coord"  is either a coordinate  name or
+   "*" (all coordinates).
+
+?-
+?V
+ V
+
+   This command  causes the vector  field associated with  the current
+   model  to  be plotted.   The  values of  the  vector  field are  as
+   specified by  the VPLOT  command.  The field  will be  displayed by
+   Arrow or Streamline plots as requested.
+
+?-
+?VBORDER
+ VBORDER bord
+
+   This  command  specifies  a   fractional  border  in  the  vertical
+   direction for a graph within a subwindow.
+
+?-
+?VIDEOC
+ VIDEOC file
+
+   This  command  captures  the  current worksurface  ("sgi*"  devices
+   only),  in a  file  "file.img",  which can  be  transferred to  the
+   U-matic video  machine, or pasted using the  IRIX "ipaste" command.
+   The  SGI screen  is  nominally 100  pixels  per inch,  so that  the
+   768x575 PAL size can theoretically matched by
+
+     PAPER 7.68 5.75
+
+   however, you should leave a border, perhaps by:
+
+     OPENW INNER 0.1 0.9 0.1 0.9
+
+?-
+?VIEW_ALTD
+ VIEW_ALTD altd
+
+   This command  specifies the altitudinal  angle (in degrees)  of the
+   view-point.
+
+?-
+?VIEW_AZIM
+ VIEW_AZIM azim
+
+   This  command specifies  the azimuthal  angle (in  degrees)  of the
+   view-point.
+
+?-
+?VIEW_DISTANCE
+ VIEW_DISTANCE distance
+ NOVIEW_DISTANCE
+
+   The VIEW_DISTANCE command specifies  the distance of the view-point
+   from the view-focus.
+
+?-
+?VIEW_NEAR
+ VIEW_NEAR distance
+ NOVIEW_NEAR
+
+   The VIEW_NEAR command specifies the distance of the view-point from
+   the near clipping plane.
+
+   This may not be supported.
+
+?-
+?VIEW_FAR
+ VIEW_FAR distance
+ NOVIEW_FAR
+
+   The VIEW_FAR command specifies  the distance of the view-point from
+   the far clipping plane.
+
+   This may not be supported.
+?-
+?VIEW_FOCUS
+ VIEW_FOCUS {x,y,z}
+ NOVIEW_FOCUS
+
+   The VIEW_FOCUS command  specifies the cartesian coordinates (x,y,z)
+   of the view-focus.
+
+?-
+?VIEW_ANGLEV
+ VIEW_ANGLEV anglev
+
+   This  command specifies  the angle  (in degrees)  subtended  by the
+   vertical axis of the view-surface.
+
+?-
+?VIEW_ASPECT
+ VIEW_ASPECT aspect
+
+   This command  specifies the width  of the view-surface in  terms of
+   its height.
+
+?-
+?VMARK
+ VMARK marker
+ NOVMARK
+
+   These commands  select or revoke a  marker to be used  as the pivot
+   point for a velocity arrow or streamline.
+
+?-
+?VMAX
+ VMAX vmax
+ NOVMAX
+
+   The VMAX  command specifies the  maximum velocity to  be displayed;
+   the NOVMAX command removes this.
+
+?-
+?VPLOT
+ VPLOT Coord Scalar
+
+   This command  makes an association between  a coordinate direction,
+   "Coord", and a "Scalar" value representing the fluid velocity along
+   that  direction.    The  "Coord"  names  for   each  geometry  are:
+   Cartesian(X,Y,Z), Cylindrical(R,Z,Phi), Spherical(R,Theta,Phi).
+
+?-
+?VPRINT
+ VPRINT
+
+   This  command prints  the list  of  open worksurfaces  and the  one
+   crrently selected as active.
+
+?-
+?VRATE
+ VRATE vrate
+
+   This command specifies the rate  at which velocity arrows are to be
+   taken from a the array of a  Grid model; a value 1 means take every
+   array element, 2 means every other array element, and so on.
+
+?-
+?VRATIO
+ VRATIO vratio
+
+   This  command specifies  the velocity  arrow size  in terms  of the
+   character size, and applies to Scatter models.
+
+?-
+?VSCALE
+ VSCALE vscale
+
+   This command specifies  a scaling to be applied  to velocity arrows
+   in order to reduce clutter.
+
+?-
+?VSHOW
+ VSHOW
+
+   This  command prints details  of the  current worksurface/subwindow
+   and prevailing plotting options.
+
+?-
+?WIRE_FRAME
+ WIRE_FRAME
+ NOWIRE_FRAME
+
+   These commands  determine whether 3-dimensional  pictures including
+   solids and surfaces are "enhanced" by wire-frame outlines.
+
+?-
+?XASPECT
+ XASPECT aspect
+
+   This command specifies the way  in which the first space coordinate
+   is stretched relative to the others.
+
+   See also:  YASPECT, ZASPECT.
+
+?-
+?XLABEL
+ XLABEL xlabel
+ NOXLABEL
+
+   The  XLABEL   command  specifies  a  label  for   the  first  space
+   coordinate; NOXLABEL removes this.
+
+?-
+?XR
+ XR xmin xmax
+ NOXR
+
+   The XR command  specifies minimum and maximum values  for the first
+   space coordinate  in subsequent graphs; NOXR removes  the effect of
+   this.
+
+?-
+?YASPECT
+ YASPECT aspect
+
+   This command specifies the way in which the second space coordinate
+   is stretched relative to the others.
+
+?-
+?ZASPECT
+ ZASPECT aspect
+
+   This command specifies the way  in which the third space coordinate
+   is stretched relative to the others.
+
+?-
+?YLABEL
+ YLABEL ylabel
+ NOYLABEL
+
+   The YLABEL command specifies a label for the second space
+   coordinate; NOYLABEL removes this.
+
+?-
+?YR
+ YR ymin ymax
+ NOYR
+
+   The YR command specifies minimum  and maximum values for the second
+   space coordinate  in subsequent graphs; NOYR removes  the effect of
+   this.
+
+?-
+?ZLABEL
+ ZLABEL zlabel
+ NOZLABEL
+
+   The  ZLABEL   command  specifies  a  label  for   the  third  space
+   coordinate; NOZLABEL removes this.
+
+?-
+?ZR
+ ZR zmin zmax
+ NOZR
+
+   The ZR command  specifies minimum and maximum values  for the third
+   space coordinate  in subsequent graphs; NOZR removes  the effect of
+   this.
+
+?-

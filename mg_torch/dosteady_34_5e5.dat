@@ -1,0 +1,23 @@
+curv 1e-08 dosteady 0.9e9 1.1e9 1.0e9 grot bisect
+!curv 1e-08 dosteady 0.8e9 1.1e9 1.0e9 verbose bisect
+! dosteady low high guess verbose bisect
+curv 1.77828e-08 dosteady 0.9e9 1.1e9 1.0e9 grot bisect
+curv 3.16228e-08 dosteady 0.9e9 1.1e9 1.0e9 grot bisect
+curv 4.216970e-08 dosteady 0.9e9 1.1e9 1.0e9 grot bisect 
+curv 4.86968e-08 dosteady 0.85e9 1.0e9 0.9e9 grot bisect
+curv 5.62341e-08 dosteady .7e9 .91e9 .8e9 grot bisect
+curv 7.5e-08 dosteady .8e9 .91e9 .8e9 grot bisect
+curv 1e-07 dosteady .8e9 .91e9 .8e9 grot bisect
+curv 1.25e-07 dosteady .8e9 .91e9 .8e9 grot bisect
+curv 1.77828e-07 dosteady .8e9 .91e9 .8e9 grot bisect
+curv 3.16228e-07 dosteady .8e9 .91e9 .8e9 grot bisect
+curv 4.21697e-07 dosteady .8e9 .91e9 .8e9 grot bisect
+curv 5.62341e-07 dosteady .8e9 .91e9 .8e9 grot bisect
+curv 7.49894e-07 dosteady .8e9 .91e9 .8e9 grot bisect
+curv 1e-06 dosteady .7e9 .91e9 .8e9 grot bisect
+curv 1.33352e-06 dosteady .7e9 .91e9 .8e9 grot bisect
+curv 1.77828e-06 dosteady .7e9 .91e9 .8e9 grot bisect
+curv 2e-06 dosteady .7e9 .91e9 .8e9 grot bisect
+curv 2.5e-06 dosteady .7e9 .91e9 .8e9 grot bisect
+curv 2.75e-06 dosteady .64e9 .91e9 .8e9 grot bisect
+curv 3e-06 dosteady .64e9 .91e9 .8e9 grot bisect

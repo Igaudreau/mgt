@@ -1,0 +1,47 @@
+rtol 1e-2
+derefcrit 0.2
+refcrit 0.3
+diffbad 10
+screen
+react tim13
+!eos super
+rho_0 2e5
+T_0 3e8
+setint boos_iso_constg 3 1.1e8
+!rho_s 9.728319e+05
+rho_s 2e5
+T_s 2.044069e+09
+depth 0.2e8
+$read dopar
+par8 -5.909172e+08 ! gravity 
+START "2 dimensional mixed He atmosphere detonation "
+   LEVELS 9
+   XYZ 2
+     X  4  -0.1e7 4.9e7 SYMMETRIC-FREE
+     Y  8  0.0 1.0e8 FIX
+    SCALARS 14 ADVECT 14
+   CASE ATMOS_MIX_INIT_X
+END
+rat 5e5
+kt
+dump
+marker 0
+msbdf
+cn 0.1
+cnf 0.1
+cns 0.1
+cns1 1e-4
+cns2 1e-4
+solev -1
+nsub 50
+$read x
+
+
+
+
+
+
+
+
+
+

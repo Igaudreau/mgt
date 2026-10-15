@@ -1,0 +1,48 @@
+! This case is a 2D detonation initiated by a hotspot
+! Plot variables: te, pg, rho, U1, U2, U3, UT, ref,
+! YH2, YH, YO2, YH2O2, YHO2, YINERT, YH2O
+
+! tolerances
+remhole
+rtol 1E-3
+abstol 0.02
+derefcrit 0.2
+refcrit 0.3
+ztol 1e-5
+
+! solver
+hllc				! use HLLC solver
+vanalbada
+noviscous
+
+! intiial conditions
+T_initial 300			! initial temperature (K)
+P_initial 6670			! initial pressure (Pa)
+!rho_initial 1			! initial density(kg/m^3)
+hotspot				! use hotspot to initiate
+
+! chemistry solver to use
+reactive			! species reaction should occur
+!exactJac
+sparse
+rk2
+
+! plot numerical sootfoil
+sootfoil
+
+! load thermodynamic data from cti file
+cti ffcm1_h2
+$read XInitial_ffcm		! intiial mole fractions
+
+! now load the model
+diffbad 100
+START "2D Channel Detonation"
+   LEVELS 5
+   XYZ 2
+       X 720 -0.1200 1.608 SYMMETRIC-FREE
+       Y 16 -0.03008 0.03008 SYMMETRIC
+       SCALARS 7 ADVECT 7
+   CASE 2DCHANNEL
+END
+diffbad 20
+

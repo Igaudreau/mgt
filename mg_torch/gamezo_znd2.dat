@@ -1,0 +1,35 @@
+rtol 1e-3
+derefcrit 0.2
+refcrit 0.3
+screen
+react tim13
+msbdf
+hll
+noviscous
+START "1 dimensional C detonation test"
+   LEVELS 1
+   XYZ 1
+      X 1 0.0 5e7 FREE
+      SCALARS 14 ADVECT 14      !iso13
+   CASE GAMEZO
+END
+order 1
+cns 1e-3
+!
+! Settings for the steady solver
+par0 1e-4   ! velocity tolerance
+par1 10000   ! nsteps to take
+par2 0.9999 ! max mach number
+par3 0.0    ! delta mach tolerance
+par4 0.1    ! time step reduction near sonic pt
+par5 1.0e-16 ! initial dx
+par6 1.01     ! time step increase factor
+!
+! solve the steady problem
+$ rm gamezo_*.xq
+mon gamezo_znd
+curv 0.0		! Add a small curvature 1e-9 works
+dosteady 0.7e9 1.3e9 1.2e9 verbose 0	! low high guess verbose/grot
+$ gnuplot gamezo_znd.plt
+q
+

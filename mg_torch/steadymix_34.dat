@@ -1,0 +1,26 @@
+rtol 1E-4
+derefcrit 0.2
+refcrit 0.3
+diffbad 20
+screen
+noreact
+react mesa_34.net
+hll
+rho_0 1e5
+T_0 3.0e8
+START "1D Timmes Mix Hydrostatic test"
+   LEVELS 1
+   XYZ 1
+      X 1 -.0025 .0025 SYMMETRIC
+      SCALARS 35 ADVECT 35
+   CASE STEADYMIX
+END
+msbdf
+hydrostatic
+order 1
+marker 1
+cns 0.001
+nsub 10000
+par0 1e-5 ! velocity tolerance
+par1 5000 ! nsetp
+

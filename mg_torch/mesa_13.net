@@ -1,0 +1,21 @@
+add_isos_and_reactions(
+   he4      ! helium
+   c12      ! carbon
+   o16      ! oxygen
+   ne20     ! neon
+   mg24     ! magnesium
+   si28     ! silicon
+   s32      ! sulfur
+   ar36     ! argon
+   ca40     ! calcium
+   ti44     ! titanium
+   cr48     ! chromium
+   fe52     ! iron
+   ni56     ! nickel
+   )
+
+! for NeNa cycle, must have ne20-22, na21-23
+! for MgAl cycle, must have mg24-26, al25-27
+! for c12+c12 reactions, must have ne20 na23, mg23
+! for c12+o16 reactions, must have mg24, al27, si27
+! for o16+o16 reactions, must have si28, p30, p31, s31

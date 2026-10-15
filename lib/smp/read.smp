@@ -1,0 +1,88 @@
+This is a simple message passing implementation for SMPs
+--------------------------------------------------------
+
+It is to be used by PARC when I get fed-up with MPICH/MP_Lite
+as crap for debug.
+
+It is based on the idea of the master instance (no -mype=<n>
+command-line argument),  creating a matrix of FIFOs with
+names like .fifo_<i>_<j>, to be used to send data from <i> to <j>, and
+then spawning (npe-1) instances of
+itself with the command line argument (-mype=<n>).
+
+Registration consists of opening FIFOs for read and write as O_RDWR
+which gets around (i think) the blocking conundrum (that if you try to
+open a FIFO for O_RDONLY, then it blocks until someone opens it
+for write, and vice-versa).
+
+It is assumed that send-recv follows the SAME even-odd, odd-even
+sequenced strategy, and it therefore should also not block.
+This requires PARC to specify the actual PEs from which it wants
+to receive data, not just the number (make the changes to parc.c).
+DONE that.
+
+The only hassle is likely to be FIFO buffer under-run:  the
+reads must iterate until completion.  This is OK, since the
+message lengths are ALWAYS known in advance (due to DUAL concept).
+
+Finally, if we start the main instance with GDB, we can also
+attempt to run the sinblings with GDB in separate (possibly
+iconic) xterms.  This requires that GDB is driven by initial
+"gdb.run.<n>" commands.  The main question is whether we can
+pass command-line arguments in this way?????  NO, only if you
+have version 5.1 of GDB or later (post RH7.2).  So we are back to
+files!  Each sibling instance would require its own
+personal gdb.run file:
+
+   exec("xterm -e gdb --command=gdb.run.<n> program")
+
+where "gdb.run.<n>" contains
+
+   run <args from master instance, plus -mype=<n> >
+
+That is OK, but begs the question of HOW the master instance
+gets to find out how many PEs it is to run on?!!!??  I don't
+want to do:
+
+   xterm -e gdb --command=gdb.run.0 program
+
+and put some crap into a fixed gdb.run.0;  that is why people
+use mprun etc. to fire up parallel programs, even if they
+don't execute the siblings there.  I would only need to do this
+for debugging.  So an argument "-gdb" would tell registration
+that it does not need to execute the siblings as a script will
+do that.
+
+WELL, for now the "smprun" script is rather hard-wired:  it is
+run by
+
+   smprun -npe=<n> program
+
+It creates a reasonable number of
+
+   gdb.run.<i>
+
+files containing
+
+   run -npe=<n> -mype=<i>
+
+where the "-npe=<n>" argument is just assumed to be correct!  The
+smp_register function always runs siblings in xterms with gdb
+(why not?).  These sibling xterms are started iconic, so that we can
+avoid clutter until necessary.
+
+SO, does it work?  Well, the next step is to get hello to perform
+the same kind of activity as a global send-recv, using the odd-even
+rules.
+
+OK, it seems to work:  i tried even sends to odd.  Getting about
+ 4Mw/s transfers between npe=4 for nw=10000.  That's cool.
+
+ONE PROBLEM, i cannot seem to get sub-second clock timers to work.
+ftime() appears to return weird numbers!  A combination of 
+ftime (for ms) and time (for sec) is safe, but poor when
+timer calls straddle a second boundary!
+
+The smp_exit() function send SIGTERM to all of the "xterm" siblings
+from master.  This means that normal termination will avoid
+"killall gdb".

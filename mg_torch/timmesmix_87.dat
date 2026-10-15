@@ -1,0 +1,29 @@
+rtol 1E-4
+derefcrit 0.2
+refcrit 0.3
+diffbad 20
+screen
+noreact
+react mesa_87.net
+hll
+rho_0 5e5
+T_0 3e8
+START "1D Timmes Mix Hydrostatic test"
+   LEVELS 1
+   XYZ 1
+      X 1 -.0025 .0025 SYMMETRIC
+      SCALARS 88 ADVECT 87
+   CASE TIMMIX
+END
+msbdf
+order 1
+cns 1e-4
+nsub 500
+par0 1e-5 ! velocity tolerance
+par1 50000 ! nstep
+par2 0.9999 ! maxmach
+par3 1e-8 ! delta mach tolerance
+curv 1e-10
+dosteady
+1.2e9 1.4e9 1.3e9 verbose grot
+

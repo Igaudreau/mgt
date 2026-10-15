@@ -1,0 +1,23 @@
+Notes:  For implementation of PPM
+
+
+These functions will need to be adapted to get two cells over in macrch.c
+cal_diffl
+cal_diffr
+
+com_halo in para.c will need to be modified.
+com2:  pa
+com4:  dpdx  for fine-coarse interface
+
+will need to modify create_halo function, which checks if cells lie on boundary
+put_halo
+receive_halo
+connect_halo
+
+struct plevel{
+  int maxcom, nlproc, lsproc, nrproc, rsproc;
+  struct cell_list *lhalo, *lbound, *rbound, *rhalo, *lref, *rref;
+  struct join **lfjoin, **rfjoin;
+  struct proc_list *lproc, *rproc;
+};
+

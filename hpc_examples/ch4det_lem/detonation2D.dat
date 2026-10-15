@@ -1,0 +1,32 @@
+! load tolerances
+$read tolerances
+
+! chemistry solver to use
+reactive
+gsl
+rk2
+
+! load diffusion/turbulence parameters
+implicitdiff
+$read mgconstants
+$read lemles
+!noviscous
+
+! other options
+sootfoil
+overdrive 1.2
+slow
+
+! now load the model
+diffbad 20
+! base grid is 32 grids per half reaction length
+START "2D CH4-O2 Detonation"
+   LEVELS 7
+   XYZ 2
+       X 450 -20.0 880.0 SYMMETRIC-FREE
+       Y 10 -10.0 10.0 SYMMETRIC
+       SCALARS 1 ADVECT 1
+   CASE ZND2D
+END
+diffbad 5
+

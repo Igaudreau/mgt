@@ -1,0 +1,23 @@
+$noecho
+hborder 0.02
+vborder 0.02
+vplot x ux
+vplot y uy
+vplot z uz
+vplot r ur
+vplot phi uphi
+openw t 0 1 .5 1
+openw b 0 1 0 .5
+openw l 0 .5 0 1
+openw r .5 1 0 1
+!openw bl 0 .5 0 .5
+!openw br .5 1 0 .5
+!openw tl 0 .5 .5 1
+!openw tr .5 1 .5 1
+selectw whole
+marker 0
+nokey
+label_field 6
+key_number_field 5
+key_label_field 5
+number_field 6

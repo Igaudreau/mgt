@@ -1,0 +1,34 @@
+# mg directory
+  setenv mg ~/mg
+# Model directories 
+  setenv mg_g_data ./data
+  #setenv mg_g_data $mg/mg_g/data
+# Path
+  set path=($path $mg/mg_g/bin $mg/mg_cti/bin $mg/mg_2p/bin $mg/mg_torch/bin $mg/mg_lem/bin ./bin $mg/lib/psplot .)
+# X11 libraries
+    setenv X11_libs -lX11
+# Double precision
+   setenv PRECISION -DDOUBLE
+# Single precision
+#   setenv PRECISION -DSINGLE
+#Comilers
+   setenv C_comp gcc
+   setenv CPP_comp g++
+   setenv F77_comp gfortran
+   setenv mpi_CC mpicc
+#Optimisation and and misc libraries
+   #For normal mpi/smp fully optimized
+   setenv Comp_opts  "$PRECISION -O3"
+   setenv system "-lreadline -lncurses -lpthread -lgsl -lgslcblas -lm -lstdc++"
+
+   # Uncomment for debugging and profiling
+   #setenv Comp_opts  "$PRECISION -pg -g -ggdb3"
+   #setenv system "-pg -ggdb3 -lreadline -lncurses -lpthread -lgsl -lgslcblas -lm -lstdc++"
+#Other compiler specific flags
+   setenv C_opts "-std=gnu99"
+   setenv CPP_opts "-std=c++11"
+   setenv Fortran_opts "-O3 -std=legacy"
+
+# MUVI FONT TABLE
+   setenv MUVI_FONT_TABLE $mg/lib/muvi.fonts
+# remember to add "source ~/mg/_cshrc" to .cshrc in the home directory

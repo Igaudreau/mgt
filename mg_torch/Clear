@@ -1,0 +1,26 @@
+#!/bin/tcsh -f
+if (-f ../src/linux/main.o) then
+  rm ../src/linux/*.o
+endif
+if (-f ./bin/mg_torch) then
+  rm ./bin/mg_torch
+endif
+cd $mg/mg_torch
+rm -r *~
+rm gmon.out
+rm *.xq
+rm -rf ./data/*
+rm -rf ./cjdet/*
+rmdir data
+rmdir cjdet
+rm shocktube_results.dat
+rm *.xq
+rm *.o
+rm helm
+rm shockTube
+rm *.eps
+rmdir bin
+rm helm_table.bin
+rm helm_table.dat
+rm torch_helm_table.dat
+

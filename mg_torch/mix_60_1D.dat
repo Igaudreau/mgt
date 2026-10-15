@@ -1,0 +1,31 @@
+rtol 1E-4
+derefcrit 0.2
+refcrit 0.3
+diffbad 20
+screen
+react mesa_60.net
+rho_0 2e5
+T_0 3e8
+rho_s 3.017589e+05
+T_s 2.082444e+09 
+START "1 dimensional mixed He detonation "
+   LEVELS 7
+!   LEVELS 1
+   XYZ 1 
+!   X  1500  0.0 1.0e7 FIX-FREE
+!    X  400  0.0 2.0e8 FIX-FREE
+    X  100  0.0 2.0e6 FIX-FREE
+    SCALARS 61 ADVECT 61    
+   CASE MIX
+END
+hll
+dump
+marker 0
+msbdf
+cns1 1e-4
+cns2 1e-4
+solev 5
+rat 2.5e5
+curv 1.0e-9
+!curv 1.0e-7
+$read x

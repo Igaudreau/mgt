@@ -1,0 +1,31 @@
+rtol 1e-3
+derefcrit 0.2
+refcrit 0.3
+screen
+react tim13
+!rk2
+msbdf
+gslatol 1e-8
+gslrtol 1e-4
+hll
+noviscous
+$ rm reactor_*.xq
+mon reactor
+START "1 dimensional C detonation test"
+   LEVELS 1
+   XYZ 1
+!      X 1 -5e7 0 FREE
+      X 1 -5e5 0 FREE
+      SCALARS 14 ADVECT 14      !iso13
+   CASE GAMEZO
+END
+cn 0.4		! default value
+cnf 0.9		! default value
+cns 0.01	! controls smallest time steps
+! cns1, cns2, solev control substeps etc in usrgsl.c (command user prints)
+!cns1 1e-5
+!cns2 1e-4	! only used if solev >0
+target 1.0 march 10000000000
+$ gnuplot gamezo.plt
+q
+

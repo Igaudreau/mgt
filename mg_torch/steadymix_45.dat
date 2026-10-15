@@ -1,0 +1,30 @@
+rtol 1E-4
+derefcrit 0.2
+refcrit 0.3
+diffbad 20
+screen
+react mesa_45.net
+hll
+START "1D Timmes Mix Hydrostatic test"
+   LEVELS 1
+   XYZ 1
+      X 3 -.0025 .0025 SYMMETRIC
+      SCALARS 47 ADVECT 47
+   CASE TIMMESMIX
+END
+!rat 2.5e10
+target 1.0e-7
+tequi 7.75e9
+rk2imp
+hydrostatic
+isothermal
+!dump
+order 1
+marker 1
+cn 1e6
+$read x
+
+
+
+
+

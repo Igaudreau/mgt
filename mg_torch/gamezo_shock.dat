@@ -1,0 +1,21 @@
+rtol 1e-3
+derefcrit 0.2
+refcrit 0.3
+screen
+react tim13
+!rk2
+msbdf
+gslatol 1e-8
+gslrtol 1e-4
+hll
+noviscous
+START "1 dimensional C detonation test"
+   LEVELS 1
+   XYZ 1
+      X 1 0 5e7 FREE
+      SCALARS 14 ADVECT 14      !iso13
+   CASE GAMEZO
+END
+shock 5e6 2e8 8.6830825806e8 1
+q
+

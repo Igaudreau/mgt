@@ -1,0 +1,19 @@
+#!/bin/tcsh
+# smprun  -npe=<n> program <args>? (a bit hard wired)
+#
+# Some unique identifier for the process running this?
+   setenv WINDOWID `xdotool getactivewindow`	# line added to get WINDOWID in case its missing
+   setenv SMP_ID $WINDOWID
+   if    ($# < 2) then
+      echo "usage:  smprun -npe=<n> <program> <args>"
+   else
+      mkdir -p .smp
+      rm -rf .smp/$SMP_ID
+      mkdir -p .smp/$SMP_ID
+      ls -R .smp/$SMP_ID
+     #xterm -fg black -bg yellow -fn 7x13bold -e $2    \
+     #  $1 -mype=0 -smpid=$SMP_ID $3 $4 $5 $6 &
+      $2 $1 -mype=0 -smpid=$SMP_ID $3 $4 $5 $6
+      killall -q $2
+   endif
+# end

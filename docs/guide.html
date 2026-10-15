@@ -1,0 +1,2552 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>guide</title>
+</head>
+<body>
+<h1><a class="mozTocH1" name="mozTocId815978"></a><big><span
+ style="color: rgb(204, 0, 0);"><small>MG GUIDE</small></span></big></h1>
+<br>
+<ol id="mozToc">
+<!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6--><li><a href="#mozTocId815978">MG
+GUIDE</a>
+    <ol>
+      <li><a href="#mozTocId945714">INSTALLATION </a></li>
+      <li><a href="#mozTocId204074">INITIAL CONDITIONS</a>
+        <ol>
+          <li><a href="#mozTocId133205">INITIAL SOLUTION </a></li>
+          <li><a href="#mozTocId743542">GEOMETRIES</a></li>
+          <li><a href="#mozTocId249649">SCALARS</a></li>
+          <li><a href="#mozTocId339337">&nbsp;TURBULENCE MODEL</a></li>
+          <li><a href="#mozTocId368538"> INTERNAL
+ENERGY</a></li>
+          <li><a href="#mozTocId429772">&nbsp;GRAVITY</a></li>
+        </ol>
+      </li>
+      <li><a href="#mozTocId827587">TIME INTEGRATION</a></li>
+      <li><a href="#mozTocId132748">CHECKPOINTING </a></li>
+      <li><a href="#mozTocId301640">GRAPHICS</a></li>
+      <li><a href="#mozTocId706233">COMMAND INTERPRETER</a>
+        <ol>
+          <li><a href="#mozTocId822021">SYSTEM COMMANDS</a></li>
+          <li><a href="#mozTocId514065">GRAPHICS COMMANDS</a></li>
+          <li><a href="#mozTocId458716">USER COMMANDS</a></li>
+          <li><a href="#mozTocId140572">OTHER COMMANDS</a></li>
+        </ol>
+      </li>
+      <li><a href="#mozTocId58802">&nbsp;USER MODULE</a>
+        <ol>
+          <li><a href="#mozTocId639859">usrqis</a></li>
+          <li><a href="#mozTocId837996">usrss</a></li>
+          <li><a href="#mozTocId49061">usrqp</a></li>
+          <li><a href="#mozTocId920926">usrpq</a></li>
+          <li><a href="#mozTocId478665">usrfxq</a></li>
+          <li><a href="#mozTocId741896">usrfxp</a></li>
+          <li><a href="#mozTocId134532">usrps</a></li>
+          <li><a href="#mozTocId876653">usrsaf</a></li>
+          <li><a href="#mozTocId170987">usrref</a></li>
+          <li><a href="#mozTocId655302">usrqsol</a></li>
+          <li><a href="#mozTocId45992">usrte</a></li>
+          <li><a href="#mozTocId288558">usrmu</a></li>
+          <li><a href="#mozTocId699332">usrkeps</a></li>
+          <li><a href="#mozTocId99653">usrbd</a></li>
+          <li><a href="#mozTocId158405">usrcmd</a></li>
+          <li><a href="#mozTocId36092">usrprt</a></li>
+          <li><a href="#mozTocId17844">usrwr</a></li>
+          <li><a href="#mozTocId313953">usrrd</a></li>
+          <li><a href="#mozTocId703359">usrsum</a></li>
+          <li><a href="#mozTocId678778">usrmon</a></li>
+          <li><a href="#mozTocId382162">usrdef</a></li>
+          <li><a href="#mozTocId65296">usroff</a></li>
+          <li><a href="#mozTocId581069"> global user
+variables </a></li>
+        </ol>
+      </li>
+      <li><a href="#mozTocId301789">&nbsp;VISCOSITY, DIFFUSION and
+THERMAL CONDUCTION (MG_G or MG_MV only)</a></li>
+      <li><a href="#mozTocId225404">&nbsp;ADAPTIVE GRID</a>
+        <ol>
+          <li><a href="#mozTocId732619">Remhole</a></li>
+          <li><a href="#mozTocId557761">Diffbad</a></li>
+        </ol>
+      </li>
+      <li><a href="#mozTocId387364"> PARALLEL</a>
+        <ol>
+          <li><a href="#mozTocId214352">smp </a></li>
+          <li><a href="#mozTocId342515">mpi </a></li>
+          <li><a href="#mozTocId470553">parallel graphics </a></li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+</ol>
+<br>
+<h2><a class="mozTocH2" name="mozTocId945714"></a><span
+ style="color: rgb(51, 51, 255);">INSTALLATION</span><br>
+</h2>
+<p style="font-family: monospace;">It is assumed that
+you have unpacked
+the mg tarball in a directory called
+mg in your home directory. In the .cshrc file
+in your home directory insert the lines<br>
+</p>
+<p style="font-family: monospace;">setenv mg ~/mg<br>
+source $mg/_cshrc<br>
+</p>
+<div style="text-align: justify;">
+<div style="text-align: justify;"><span style="font-family: monospace;"></span><span
+ style="font-family: monospace;">This sets up the environment
+variables for mg and the data directories (note that you need to be
+running csh or tcsh for any of this to work). The model files (*.dsb)
+files are written to these directories. (see write command). These are
+set to
+~mg/mg_g/data, ~mg/mg_m/data and ~/mg_mv/data in _cshrc,</span><span
+ style="font-family: monospace;"> but you might want to
+change this.It also sets the environment variable PRECISION, which
+determines the precision. The default is SINGLE</span>,&nbsp; <span
+ style="font-family: monospace;">but you can change this by
+uncommenting/commenting the appropriate lines.&nbsp;</span>
+</div>
+<span style="font-family: monospace;"></span></div>
+<span style="font-family: monospace;"><br
+ style="font-family: monospace;">
+</span><span style="font-family: monospace;"></span><span
+ style="font-family: monospace;">
+The directories in mg are<br>
+<br>
+src&nbsp;&nbsp; - contains the generic source files and the
+directory linux for object files.<br>
+lib&nbsp;&nbsp; - contains the libraries (muvi, parcsmp, parcmpi, smp).<br>
+bin&nbsp;&nbsp; - contains the excutables (mg_g, mg_m).<br>
+mg_g&nbsp; - working directory for mg_g.<br>
+mg_m&nbsp; - working directory for mg_m.<br>
+</span><span style="font-family: monospace;">mg_mv&nbsp; - working
+directory for mg_mv.</span><span style="font-family: monospace;"><br>
+docs&nbsp; - documentation.<br>
+<br>
+The working directories, mg_g, mg_m and mg_mv do not have to be in the
+mg
+directory: they can be anywhere.<br>
+<br>
+First create the libraries by doing<br>
+<br>
+Createlib</span><br>
+<span style="font-family: monospace;"><br>
+in the mg directory. Note that if you later change the precision, then
+you have to remake the libraries with<br>
+<br>
+Clearall<br>
+Createlib<br>
+<br>
+There three versions of the code:<br>
+<br>
+MG_G&nbsp; - Gas dynamics with viscosity and a k-epsilon turbulence
+model.<br>
+MG_M&nbsp; - Ideal MHD.<br>
+MG_MV - MHD with resistivity and viscosity.<br>
+<br>
+Each of these is in its own directory. You can make them by going to
+the relevant directory and doing<br>
+<br style="font-family: monospace;">
+</span><span style="font-family: monospace;">makemg smp<br>
+or<br>
+makemg mpi<br style="font-family: monospace;">
+</span><br>
+<div style="text-align: justify;"><span style="font-family: monospace;">to
+make either the smp or mpi
+versions. This creates mg_g,&nbsp; mg_m or mg_mv depending on the
+directory you are in. In order to make the mpi version you will
+need a working implementation of mpi (this is set to mpicxx in
+mg/_cshrc). Note that the executables (mg_g, mg_m
+or
+mg_mv) will be in the directory mg/bin and the object files in
+mg/src/linux. The linker may complain that it cannot find the X11
+libraries.
+These are defined by the environment variable X11_libs, which is set to
+-lX11 in _cshrc. On some installations you may have to specify these
+explicitly by setting X11_libs to something like
+/usr/X11R6/lib/libX11.a.
+You must also make sure that you have installed readline and ncurses.</span><br>
+<span style="font-family: monospace;"></span></div>
+<span style="font-family: monospace;"><br>
+</span>
+<div style="text-align: justify;">
+<div style="text-align: justify;"><span style="font-family: monospace;">Note
+that, in the interest of speed, the arrays in the cell structures are
+static with sizes determined by MAXD (maximum number of dimensions) and
+MAXQ (maximum number of solution variables). These are set in the file
+struct.h. It is a good idea to keep these as small as possible for the
+particular application. The code will complain if they are too small.</span><br>
+</div>
+<span style="font-family: monospace;"></span></div>
+<span style="font-family: monospace;"><br>
+To run mg_g, mg_m or mg_mv in scalar
+mode type</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">mg_g</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">or</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">mg_m<br>
+or mg_mv<br style="font-family: monospace;">
+</span><br>
+<span style="font-family: monospace;">in the the relevant directory (if
+you have just created them for the first time, you might have to type
+../bin/mg_g,&nbsp; ../bin/mg_m or ../bin/mg_m). This
+will give the mg_g, mg_m&nbsp; or mg_mv prompt</span><br
+ style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span></span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;">or</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace; color: rgb(204, 0, 0);">MG_M&gt;<br>
+</span><span style="font-family: monospace;">or</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace; color: rgb(204, 0, 0);">MG_MV&gt;</span><br>
+<span style="font-family: monospace; color: rgb(204, 0, 0);"><br
+ style="font-family: monospace;">
+</span><span style="font-family: monospace;"><br>
+To quit type <span style="color: rgb(0, 153, 0);">q <span
+ style="color: rgb(0, 0, 0);">at the command prompt.<br>
+<br>
+</span></span>From now on we will assume
+that you are running mg_g. Where a command is special to mg_m or mg_mv,
+this is
+indicated.<br>
+&nbsp;</span>
+<h2 style="color: rgb(51, 51, 255);"><a class="mozTocH2"
+ name="mozTocId204074"></a>INITIAL CONDITIONS</h2>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(0, 0, 0);">At the prompt type</span><br>
+<br>
+<span style="color: rgb(204, 0, 0);">MG_G&gt;</span>$read
+filename</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">where the initial conditions are
+in a file filename.dat.
+e.g. the file sod.dat sets up the Sod problem. It contains</span><br
+ style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;">START "1
+dimensional sod
+test" !
+START command and title</span><br
+ style="color: rgb(0, 153, 0); font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">LEVELS
+1 &nbsp; &nbsp; ! Number of levels (numbered from 0)</span><br
+ style="color: rgb(0, 153, 0); font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">XYZ
+1 &nbsp; &nbsp;&nbsp; ! Geometry and number of dimensions</span><br
+ style="color: rgb(0, 153, 0); font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"> X
+100 -1 1
+FREE &nbsp; ! X No
+of cells, domain and boundary condition</span><br
+ style="color: rgb(0, 153, 0); font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">CASE
+SOD &nbsp; &nbsp; ! Case</span><br
+ style="color: rgb(0, 153, 0); font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">SCALARS
+2 &nbsp; &nbsp; ! No of scalars (optional, default=1)</span><br
+ style="color: rgb(0, 153, 0); font-family: monospace;">
+<span style="color: rgb(0, 153, 0); font-family: monospace;">END &nbsp;
+&nbsp; &nbsp; ! End of START command</span><br
+ style="font-family: monospace;">
+<br>
+<div style="text-align: justify;"><span style="font-family: monospace;">Note
+that everything on a line
+after a </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">! </span><span
+ style="font-family: monospace;">is a comment.</span><span
+ style="font-family: monospace;"> These commands will be
+echoed as the file is read in.
+In fact reading a .dat file with $read produces exactly the same effect
+as typing the these commands at the command prompt.</span><br>
+<span style="font-family: monospace;"></span></div>
+<span style="font-family: monospace;"><br>
+</span><span style="font-family: monospace;">For multidimensions you
+might have</span><br style="font-family: monospace;">
+<span style="font-family: monospace;"><br>
+&nbsp;</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"> XYZ 2</span><br
+ style="color: rgb(0, 153, 0); font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"> X
+1000 0.0 5.0 SYMMETRIC-FREE ! Specs for X</span><br
+ style="color: rgb(0, 153, 0); font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"> Y
+1000 0.0 5.0 SYMMETRIC-FREE ! Specs for Y</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">Here the left boundaries have
+symmetry and the right boundaries are
+free (zero normal gradient).<br>
+<br>
+</span>
+<h3><a class="mozTocH3" name="mozTocId133205"></a><a name="initsol"></a><span
+ style="color: rgb(51, 51, 255);">INITIAL SOLUTION<br>
+</span></h3>
+<big style="font-weight: bold;"><span style="color: rgb(51, 51, 255);"></span></big><span
+ style="font-family: monospace;">The initial solution is set by the
+routine <span style="color: rgb(0, 153, 0);">usrqis</span> using the
+case determined by the <span style="color: rgb(0, 153, 0);">CASE</span>
+command. <span style="color: rgb(0, 153, 0);">usrqis</span> is given
+the position of the cell centre and must return the desired conserved
+variables in that cell. There are two modes of initialisation for
+adaptive grids, fast and slow, invoked by the <span
+ style="color: rgb(0, 153, 0);">FAST</span> (DEFAULT) and <span
+ style="color: rgb(0, 153, 0);">SLOW</span> commands. These must be
+issued before the <span style="color: rgb(0, 153, 0);">START</span>
+command.In fast mode <span style="color: rgb(0, 153, 0);">usrqis</span>
+is first called for each cell on the two coarsest levels (0 and 1) and
+the solutions are then compared to determine whether the cell should be
+refined to level 2. This process is repeated until the finest level is
+reached and the solutions are then merged to ensure that the solution
+in a coarse cell is the average of that in its children. This works
+fine unless level 1 is so coarse that it does not capture some region
+that needs to be refined. In that case it is necessary to use slow
+initialisation, which calls usrqis for potential cells on all levels.
+The potential cells are not created unless they are needed, so this
+does not consume any more memory, but it can be very slow if there are
+a large number of levels.</span><br>
+<h3><a class="mozTocH3" name="mozTocId743542"></a><a name="geometries"></a><span
+ style="color: rgb(51, 51, 255);">GEOMETRIES</span></h3>
+<div style="text-align: justify;"><span style="font-family: monospace;">Three
+geometries, <span style="color: rgb(0, 153, 0);">XYZ</span>
+(cartesian), <span style="color: rgb(0, 153, 0);">RZP </span>(cylindrical
+polars) and <span style="color: rgb(0, 153, 0);">RTP</span> (spherical
+polars) are supported. <span style="color: rgb(0, 153, 0);">XYZ</span>
+is available
+in 1, 2 and 3
+dimensions, <span style="color: rgb(0, 153, 0);">RZP</span> in 1, 2
+dimensions and <span style="color: rgb(0, 153, 0);">RTP</span> in 1
+dimension. </span><span style="font-family: monospace;"></span><br>
+<span style="font-family: monospace;"></span></div>
+<span style="font-family: monospace;"><br>
+For <span style="color: rgb(0, 153, 0);">RZP</span> and <span
+ style="color: rgb(0, 153, 0);">RTP</span> the r=0 boundary
+must be symmetric e.g.</span><br style="font-family: monospace;">
+<span style="font-family: monospace;"><br>
+&nbsp; </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">RZP 2</span><br
+ style="color: rgb(0, 153, 0); font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"> R
+1000 0.0 5.0 SYMMETRIC-FREE ! Specs for R</span><br
+ style="color: rgb(0, 153, 0); font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"> Z
+1000 0.0 5.0
+FREE &nbsp;&nbsp; ! Specs for Z</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">imposes a symmetry boundary on
+r=0 and
+free elsewhere. Note <span style="color: rgb(0, 153, 0);">FREE</span>
+or <span style="color: rgb(0, 153, 0);">SYMMETRIC</span>
+imposes those boundary conditions at both ends (i.e. not <span
+ style="color: rgb(0, 153, 0);">FREE-FREE</span> or <span
+ style="color: rgb(0, 153, 0);">SYMMETRIC-SYMMETRIC</span>).</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">Other possible boundary
+conditions are <span style="color: rgb(0, 153, 0);">PERIODIC</span>, <span
+ style="color: rgb(0, 153, 0);">FIX</span> and <span
+ style="color: rgb(0, 153, 0);">WALL</span> e.g. </span><span
+ style="font-family: monospace;"> </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">XYZ 2</span><br
+ style="color: rgb(0, 153, 0); font-family: monospace;">
+<span style="font-family: monospace;"><br>
+&nbsp;</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"> X
+1000 0.0 5.0
+FIX &nbsp;&nbsp; ! Specs for X</span><br
+ style="color: rgb(0, 153, 0); font-family: monospace;">
+<span style="font-family: monospace;">&nbsp;</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"> Y
+1000 0.0 5.0
+PERIODIC &nbsp; ! Specs
+for Y</span><br style="font-family: monospace;">
+<br>
+<div style="text-align: justify;"><span style="font-family: monospace;">imposes
+fixed boundary conditions
+on the x boundaries and periodic boundary
+conditions on the y boundary. For obvious reasons, <span
+ style="color: rgb(0, 153, 0);">PERIODIC</span>
+cannot be combined with another boundary condition for the</span><span
+ style="font-family: monospace;"> same coordinate. The <span
+ style="color: rgb(0, 153, 0);">FIX</span> boundary condition
+imposes fixed conditions. Exactly which variables are fixed can be set
+in the routine usrbd in usr.c. <span style="color: rgb(0, 153, 0);">WALL</span>
+(MG_G&nbsp; and MG_MV only) is the same as
+symmetry except that it</span><span style="font-family: monospace;">
+also imposes no slip for viscous problems.<br>
+<br>
+The domain and boundary conditions set up by the start command are not
+set in stone: the size of the domain can be reduced by the <span
+ style="color: rgb(0, 153, 0);">NEWDOM</span> command and the boundary
+conditions can be changed by the <span style="color: rgb(0, 153, 0);">BOUNDL</span>
+and <span style="color: rgb(0, 153, 0);">BOUNDR</span> commands. For
+example, if the original x range and boundary conditions were<br>
+<br>
+&nbsp;</span><span style="font-family: monospace;">
+&nbsp;</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"> X
+1000 0.0 5.0
+FIX<br>
+<br>
+<span style="color: rgb(0, 0, 0);">Then these could be changed to </span><br>
+<br>
+</span><span style="font-family: monospace;">&nbsp;</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"> X 500 0.0
+2.5&nbsp; FIX-FREE<br>
+<br>
+<span style="color: rgb(0, 0, 0);">by </span><br>
+<br>
+</span><span style="font-family: monospace;">&nbsp;</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"> NEWDOM 0 2.5<br>
+&nbsp; BOUNDR 1 FIX<br>
+</span><span style="color: rgb(0, 153, 0); font-family: monospace;"> </span><span
+ style="font-family: monospace;"></span></div>
+<h3><a class="mozTocH3" name="mozTocId249649"></a><span
+ style="color: rgb(51, 51, 255);">SCALARS</span></h3>
+<div style="text-align: justify;"><span style="font-family: monospace;">The
+<span style="color: rgb(0, 153, 0);">SCALAR</span> subcommand of the
+<span style="color: rgb(0, 153, 0);">START</span> command defines the
+number of
+scalars. By default these are advected at the fluid velocity, but some
+or all of them can
+be defined to be non-advecting by e.g.</span><br
+ style="font-family: monospace;">
+</div>
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;">&nbsp;
+SCALARS 2
+ADVECT 1</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">This defines two scalars of which
+the first is advected and second
+is not. Note that by default there is always one scalar, which is
+advected.<br>
+</span>
+<h3><a class="mozTocH3" name="mozTocId339337"></a><a name="turbulence"></a>&nbsp;<span
+ style="color: rgb(51, 51, 255);">TURBULENCE MODEL</span></h3>
+<span style="font-family: monospace;">The mg_g code contains a
+k-epsilon turbulence model, which is invoked by the </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">KEPS <span
+ style="color: rgb(0, 0, 0);">command. This has to be executed before
+the</span> START command</span>.&nbsp; <span
+ style="font-family: monospace;">The dimensionless constants in this
+model are standard and are set in the routine <a href="#usrkeps">usrkeps</a></span>.
+<span style="font-family: monospace;">The equations for this model are
+given in <a href="kep.pdf">k-epsilon-equations</a>.</span><span
+ style="font-family: monospace;"><br>
+</span>
+<h3><a class="mozTocH3" name="mozTocId368538"></a><a
+ name="internal_energy"></a> <span style="color: rgb(51, 51, 255);">INTERNAL
+ENERGY</span></h3>
+<span style="font-family: monospace;">The code works with the conserved
+variables and this can lead to errors in the internal energy when the
+internal energy is small compared to the kinetic and magnetic energies.
+This has no effect on the dynamics, but it does mean that the
+temperature is inaccurate in such regions. In order to cope with this,
+there is a facility for solving the internal energy equation in
+addition to the equation for the total energy. This is invoked by the
+command </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">INTEN</span><span
+ style="font-family: monospace;">, which must be invoked before the </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">START </span><span
+ style="font-family: monospace;">command. The internal energy is stored
+in pa[iqei] and qa[iqie] (see <a href="#usrqis">usrqis</a>).</span><a
+ href="mozTocId204046"><span style="font-family: monospace;"></span></a><a
+ style="color: rgb(0, 0, 0);" href="mozTocId204046"><span
+ style="font-family: monospace;"></span></a><span
+ style="font-family: monospace;"></span><br>
+<span style="font-family: monospace;"></span><big><span
+ style="color: rgb(51, 51, 255);"></span></big><span
+ style="color: rgb(51, 51, 255);"></span>
+<h3><a class="mozTocH3" name="mozTocId429772"></a><a name="gravity"></a>&nbsp;<span
+ style="color: rgb(51, 51, 255);">GRAVITY</span></h3>
+<big style="font-weight: bold;"><span style="color: rgb(51, 51, 255);"></span></big><span
+ style="font-family: monospace;">The mg_g and mg_m codes include
+self-gravity, which can be invoked with the command<br>
+</span><span style="color: rgb(0, 153, 0); font-family: monospace;"><br>
+</span><span style="font-family: monospace;"></span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">grav </span><small><span
+ style="font-family: monospace;"><br>
+<br>
+<big>at any time during the calculation. It can be switched off by </big></span></small><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">grav. </span><small><span
+ style="font-family: monospace;"><big>The&nbsp; gravitational
+potential is calculated&nbsp; using a full approximation multigrid.
+This is controlled by the parameters, </big></span><big><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">NREL</span></big></small><span
+ style="font-family: monospace;"> - the number of relaxations on each
+level and</span><big><big><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"> </span></big></big><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">NORMRAT</span><big><big><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"> </span></big></big><span
+ style="font-family: monospace;">- the convergence tolerance for the
+multigrid. These are set by the commands<br>
+<br>
+<br>
+</span><span style="color: rgb(0, 153, 0); font-family: monospace;">nrel
+number<br>
+<br>
+</span><small><span style="font-family: monospace;"><big>and</big></span></small><br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><br>
+</span><span style="color: rgb(0, 153, 0); font-family: monospace;">normrat
+value</span><br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><br>
+</span><span style="font-family: monospace;">The default values are <span
+ style="color: rgb(0, 153, 0);">nrel = 5</span>, <span
+ style="color: rgb(0, 153, 0);">normrat = 0.25</span>, which should be
+appropriate in most cases.<br>
+<br>
+By default the potential is set to zero at </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">FREE</span><span
+ style="font-family: monospace;"> and </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">FIXED </span><span
+ style="font-family: monospace;">and its derivative to zero at</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"> SYMMETRIC </span><span
+ style="font-family: monospace;">boundaries. However, this might not
+accurate if there is a significant amount of mass near the boundaries
+or the domain is small. In such cases, one can invoke the calculation
+of the boundary potential by<br>
+<br>
+</span><span style="color: rgb(0, 153, 0); font-family: monospace;">boundpot<br>
+</span><span style="font-family: monospace;"><br>
+at any time during the calculation. It can be switched off by </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">noboundpot</span><span
+ style="font-family: monospace;">.This computes the boundary potential
+at </span><span style="color: rgb(0, 153, 0); font-family: monospace;">FREE</span><span
+ style="font-family: monospace;"> and </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">FIXED </span><span
+ style="font-family: monospace;">boundaries by summing over all
+interior cells on
+level </span><span style="font-family: monospace;"></span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">levb. </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">levb </span><span
+ style="font-family: monospace;">is set by<br>
+<br>
+</span><span style="font-family: monospace;"></span><span
+ style="font-family: monospace;"></span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"></span><span
+ style="font-family: monospace;"></span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">levb&nbsp; leve</span><span
+ style="font-family: monospace;"></span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">l<br>
+<br>
+</span><span style="font-family: monospace;">The default is </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">levb = 1</span><span
+ style="font-family: monospace;">. This is not implemented in a
+particularly efficient way, so it is wise to keep </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">levb </span><span
+ style="font-family: monospace;">as small as possible.</span><span
+ style="font-family: monospace;"> <br>
+<br>
+</span><span style="color: rgb(51, 51, 255);"></span><span
+ style="color: rgb(51, 51, 255);"></span>
+<h2><a class="mozTocH2" name="mozTocId827587"></a><span
+ style="color: rgb(51, 51, 255);">TIME INTEGRATION</span></h2>
+<span style="font-family: monospace;">To advance the solution type</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;"><br>
+</span><span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>march
+nsteps</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">where nsteps is the number
+of timesteps to be executed. You
+can also set it to stop at time <span style="color: rgb(0, 153, 0);">targettime</span>
+with the command</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>target
+targettime</span><br style="font-family: monospace;">
+&nbsp;<br>
+<span style="font-family: monospace;">e.g. for sod you could do</span><br
+ style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>target
+0.1</span><br style="color: rgb(0, 153, 0); font-family: monospace;">
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>march
+100</span><br style="color: rgb(0, 153, 0); font-family: monospace;">
+<br>
+<div style="text-align: justify;"><span style="font-family: monospace;">This
+will stop at time = 0.1.
+Note
+that if the given number
+of steps is not enough to reach the <span
+ style="color: rgb(0, 153, 0);">targettime</span>, it will stop
+after the given number
+of steps and report that the target time has not been reached.</span><br>
+<span style="font-family: monospace;"></span></div>
+<span style="font-family: monospace;"><br>
+</span>
+<h2><a class="mozTocH2" name="mozTocId132748"></a><span
+ style="color: rgb(51, 51, 255);">CHECKPOINTING<br>
+</span></h2>
+<span style="font-family: monospace;">At any time the current model can
+be written to the data directory <span style="color: rgb(0, 153, 0);">$mg_g_data</span>
+by </span><br>
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>write file<br>
+<br>
+</span><span style="font-family: monospace;">In scalar mode this writes
+files file.h.dsb and file000.dsb. In parallel mode the files are
+file.h.dsb, file.n.dsb with n= 0..npe where npe is the number of
+processors.</span><br>
+<br>
+<span style="font-family: monospace;">The model can be read in by</span>
+<br>
+<br>
+&nbsp; <span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>read file<br>
+<br>
+</span><span style="font-family: monospace;">Note that the model can be
+read in with a different number of processors than that with which it
+was created.</span><br>
+<h2><a class="mozTocH2" name="mozTocId301640"></a><span
+ style="color: rgb(51, 51, 255);">GRAPHICS</span></h2>
+<span style="font-family: monospace;">First set up a graphics window by
+reading the graphics setup file <span style="color: rgb(0, 153, 0);">x.dat</span></span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;"><br>
+</span><span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>$read
+x</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">If you get weird colours in 2D
+graphics, edit x.dat and replace the line<br>
+<br>
+open a x<br>
+<br>
+by<br>
+<br>
+open a x_tecra<br>
+<br>
+Now you can choose to plot e.g.
+the x velocity by</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>plot
+u1</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">Then plot it by</span><br
+ style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>p</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">By default this puts markers at
+each grid point and joins them with a line. The markers can be switched
+off
+by</span><br style="font-family: monospace;">
+<span style="font-family: monospace;"><br>
+</span><span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>marker
+0</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">The line can be switched off by</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;"><br>
+</span><span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>noline</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">The markers can be switched on
+again by</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>marker
+n</span><br style="font-family: monospace;">
+<span style="font-family: monospace;"><br>
+where n=1,2,3 or 4 for different
+marker styles. The line can be
+switched on by</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>line
+1</span><br style="font-family: monospace;">
+<span style="font-family: monospace;"><br>
+By default graphs are plotted on
+top of each other. A graph can be
+erased by</span><br style="font-family: monospace;">
+<br style="color: rgb(204, 0, 0);">
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>er</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">By default, the x range is equal
+to the size of the domain. It can be
+set to <span style="color: rgb(0, 153, 0);">xmin &lt; x &lt; xmax</span>
+by</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>xr
+xmin xmax</span><br
+ style="color: rgb(0, 153, 0); font-family: monospace;">
+<br>
+<span style="font-family: monospace;">The default can be restored by</span><br
+ style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>noxr</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">By default, the range for a
+variable q (e.g. u1) is <span style="color: rgb(0, 153, 0);">qmin &lt;
+q &lt;
+qmax</span> where qmin and qmax are the minimum and maximum values that
+occur.
+This can be reset by</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>qr
+nqmin nqmax</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">where nqmin - nqmax is the
+desired range.</span><br style="font-family: monospace;">
+<span style="font-family: monospace;"><br>
+</span><span style="font-family: monospace;">The default can be
+restored by</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>noqr</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">The graphics window can be split
+by</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>selectw
+w</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">where <span
+ style="color: rgb(0, 153, 0);">w=t</span> or <span
+ style="color: rgb(0, 153, 0);">b </span>for a window
+at the top or bottom. All
+subsequent plotting occurs in the selected window until another window
+is selected. The whole window can be selected by</span><br
+ style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>selectw
+whole</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">A ps file of a graph can be
+created once a graphics window
+has been set up by <span style="color: rgb(0, 153, 0);">$read x</span>.
+Type</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>open
+b ps_rgb</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">Then execute a set of graphics
+commands e.g.</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>plot
+u1 p</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">Note that this draws contours by
+default unless you have opened an x window. To suppress these do<br>
+<br>
+</span><span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt; </span></span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">nocontour</span><br>
+<span style="font-family: monospace;"><br>
+before plotting.<br>
+<br>
+Now close the ps file</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>close
+b</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">This creates a file <span
+ style="color: rgb(0, 153, 0);">b.ps</span> in
+the current directory, but it
+lacks a bounding box and various other essentials. It needs to be
+completed by</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;">MG_G&gt;$
+plot b output</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">This creates a file
+<span style="color: rgb(0, 153, 0);">output.ps</span> in the current
+directory.</span><span style="font-family: monospace;"></span><span
+ style="color: rgb(51, 51, 255);"></span><span
+ style="color: rgb(51, 51, 255);"><br>
+&nbsp;</span>
+<h2 style="color: rgb(51, 51, 255);"><a class="mozTocH2"
+ name="mozTocId706233"></a>COMMAND INTERPRETER</h2>
+<span style="font-family: monospace;">MG_G is controlled by a command
+interpreter
+and the above are examples of the available
+commands. These fall into three categories</span><br>
+<span style="font-family: monospace;"></span><span
+ style="font-family: monospace;"></span>
+<h3><a class="mozTocH3" name="mozTocId822021"></a><span
+ style="color: rgb(51, 51, 255);">SYSTEM COMMANDS</span></h3>
+<span style="font-family: monospace;"></span><span
+ style="font-family: monospace;">The</span><span
+ style="font-family: monospace;">se are preceded by $ followed by a
+space. The commands consist of the usual shell commands e.g.</span><span
+ style="font-family: monospace;"></span><br>
+<span style="font-family: monospace;"></span><span
+ style="font-family: monospace;"><br>
+</span><span style="font-family: monospace; color: rgb(0, 153, 0);"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>$ ls *<br>
+</span><span style="font-family: monospace;"></span><br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"></span><span
+ style="font-family: monospace;">will list files
+in the current directory. It is also possible to spawn a shell by</span><br
+ style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>$
+csh</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">You can then execute shell
+commands and when you have finished type</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">exit</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">to return to mg_m.</span><span
+ style="font-family: monospace;"></span><span
+ style="font-family: monospace;"><br>
+<br>
+There is also </span><span
+ style="font-family: monospace; color: rgb(0, 153, 0);"><span
+ style="color: rgb(0, 0, 0);">a command</span> $log filename</span> <span
+ style="font-family: monospace;">which writes all input commands
+to a file <span style="color: rgb(0, 153, 0);">filename.log</span></span>.<br>
+<h3 style="color: rgb(51, 51, 255);"><a class="mozTocH3"
+ name="mozTocId514065"></a>GRAPHICS COMMANDS</h3>
+<span style="font-family: monospace;">These commands are interpreted
+by the muvi graphics package and the most commonly used ones are</span><br
+ style="font-family: monospace;">
+&nbsp;
+<table
+ style="text-align: left; font-family: monospace; width: 444px; height: 421px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot
+name &nbsp;&nbsp;</td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">choose
+plot variable (e.g. rho)&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">p&nbsp;</td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot
+solution for current variable<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">g<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">show grid
+(multidimensions only)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">xr xmin
+xmax &nbsp;</td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">set x
+range<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">noxr<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">restore
+default x range<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">qr qmin
+qmax<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">set
+variable range&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">noqr<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">restore
+default variable range<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">mask
+coord value<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot
+slice at coord=value</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">unmask
+coord<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">undo mask
+for coord<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">unmask
+*&nbsp;</td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">undo all
+coord masks&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">marker num<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">choose
+marker style (num=1..4)&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">marker 0<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">no
+marker&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">line 1<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">markers
+joined by line&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">noline<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">markers
+not joined by line&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">selectw
+t or b<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">select
+top or bottom window&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">selectw
+whole<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">select
+whole window<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">er<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">erase
+graph<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">open b
+ps_rgb<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">open file
+for ps&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">close b<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">close ps
+file<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<span style="font-family: monospace;"></span><span
+ style="font-family: monospace;"><br>
+The most common plot variables
+(chosen by plot name) are</span><br style="font-family: monospace;">
+&nbsp;
+<table
+ style="text-align: left; font-family: monospace; width: 543px; height: 353px;"
+ border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot
+rho &nbsp; &nbsp; &nbsp; &nbsp;</td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">density<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot pg<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">gas
+pressure<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot u1<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">x
+velocity&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot
+u2&nbsp;</td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">y velocity<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot u3<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">z
+velocity&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot aln<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">scalar n<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot b1<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">x
+component of magnetic field (MG_M, MG_MV only)&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot b2<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">y
+component of magnetic field (MG_M, MG_MV only)</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot b3<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">z
+component of magnetic field (MG_M, MG_MV only)</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0);">plot pot</span><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0);">gravitational potential</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0);">plot gan</span></td>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0);">gravitational acceleration in direction
+n<br>
+      </span></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot
+pt&nbsp;</td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">total
+pressure (gas + magnetic, MG_M, MG_MV only)</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot pm<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">magnetic
+pressure (MG_M, MG_MV only)&nbsp;</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot beta<br>
+      </td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">ratio of
+gas to magnetic pressure (MG_M, MG_MV only)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);">plot k<br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0);">turbulent energy per unit mass (KEPS
+only)</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0);">plot eps</span><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0);">turbulent dissipation per unit mass
+(KEPS only)</span></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0);">mun</span><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0);">dynamic diffusion coefficient for
+variable n</span><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<span style="font-family: monospace;">Once a plot variable is
+defined by plot, this variable is
+plotted until another is chosen.<br>
+</span><br>
+<span style="font-family: monospace;">You can also draw streamlines or
+field lines using the stream command.
+This is of the form</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace; color: rgb(0, 153, 0);"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>stream num
+x0 y0 z0 dx dy dz</span><br style="font-family: monospace;">
+<span style="font-family: monospace;"><br>
+</span>
+<div style="text-align: justify;"><span style="font-family: monospace;">This
+places <span style="color: rgb(0, 153, 0);">num</span> starting
+points starting with <span style="color: rgb(0, 153, 0);">x0</span>, <span
+ style="color: rgb(0, 153, 0);">y0</span>, <span
+ style="color: rgb(0, 153, 0);">z0</span>
+and spaced by <span style="color: rgb(0, 153, 0);">dx</span>, <span
+ style="color: rgb(0, 153, 0);">dy</span>, <span
+ style="color: rgb(0, 153, 0);">dz</span>. The lines are drawn from
+these points.
+The file <span style="color: rgb(0, 153, 0);">streamrz.dat</span>
+contains an example of this. For adaptive
+calculations you
+need to do</span><br style="font-family: monospace;">
+</div>
+<span style="font-family: monospace;"><br>
+</span><span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>levs 1
+maxlev</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">where <span
+ style="color: rgb(0, 153, 0);">maxlev</span> is
+the maximum level (see generic commands). </span><span
+ style="font-family: monospace;">Once you have done this, you plot
+streamlines by doing<br>
+<br>
+</span><span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>v<br>
+<br>
+</span><span style="font-family: monospace;">or fieldlines (MG_M or
+MG_MV) by<br>
+<br>
+</span><span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>b</span><br>
+<span style="font-family: monospace;"><br>
+By default, the </span><span style="font-family: monospace;"><span
+ style="color: rgb(0, 153, 0);">v</span> and <span
+ style="color: rgb(0, 153, 0);">b</span></span><span
+ style="font-family: monospace;"> show arrows. You can return to this
+with</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>arrow</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">Note that when using very
+fine grids, the velocity arrows
+can be very small. You can choose to plot them at intervals of <span
+ style="color: rgb(0, 153, 0);">n
+</span>cells by</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>vrate n</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">You can also change the scale of
+the arrows by</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>vscale
+value</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">Value determine the length of
+the arrows (default 1). The
+same commands also affect the magnetic field arrows in MG_M or MG_MV.</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">There are also other commands,
+some of which are used in the <span style="color: rgb(0, 153, 0);">x.dat</span>
+file. The only one you might want to change in the <span
+ style="color: rgb(0, 153, 0);">x.dat</span> file is the
+paper size command</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace; color: rgb(0, 153, 0);">paper 6.0
+6.0</span><br style="font-family: monospace;">
+<br>
+<div style="text-align: justify;"><span style="font-family: monospace;">Although
+<span style="color: rgb(0, 153, 0);">plot</span> is a muvi
+command, its argument (the plot
+item) is accessible to the user. The routine <span
+ style="color: rgb(0, 153, 0);">usrps</span> in the file
+<span style="color: rgb(0, 153, 0);">usr.c</span> is given the argument
+of plot
+in the string variable item. The user can use this to define different
+plot items using the existing
+templates.</span><br style="font-family: monospace;">
+</div>
+<span style="font-family: monospace;"><br>
+It is possible to plot a data
+file using the <span style="color: rgb(0, 153, 0);">readxq</span>
+command. For example</span><br style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>readxq time</span><br
+ style="font-family: monospace;">
+<br>
+<div style="text-align: justify;"><span style="font-family: monospace;">plots
+the data in the file
+<span style="color: rgb(0, 153, 0);">time.xq</span>. The file consists
+of a
+title for the graph and the abscissa and ordinate,
+together with a list of
+pairs of data values, "x" and "y". It plots the graph of y
+against x. The file <span style="color: rgb(0, 153, 0);">time.xq</span>
+gives an
+example. It is also possible to plot two and three dimensional graphs: </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">help readxq </span><span
+ style="font-family: monospace;">gives information on this.<br>
+<br>
+The current plot can be exported to a file by<br>
+</span><span style="font-family: monospace;"></span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"></span><br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>export filename p<br>
+</span><span style="font-family: monospace;"></span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;"></span><span
+ style="font-family: monospace;"></span><span
+ style="font-family: monospace;"></span><br>
+<span style="font-family: monospace;">This produces a copy of the
+current plot in a file </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">filename.xq</span><span
+ style="font-family: monospace;"> (</span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">help export </span><span
+ style="font-family: monospace;">gives more information)</span><span
+ style="font-family: monospace;">. This file can be read in by </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">readxq</span><span
+ style="font-family: monospace;">.<br>
+</span><span style="font-family: monospace;"></span><span
+ style="font-family: monospace;"></span></div>
+<span style="font-family: monospace;"></span><span
+ style="font-family: monospace;"></span><br
+ style="font-family: monospace;">
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><br>
+<span style="color: rgb(204, 0, 0);">MG_G&gt;</span>help topics</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;"><br>
+lists all graphics commands. Help
+on an individual command can be got by</span>&nbsp; <span
+ style="font-family: monospace;"></span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">help command</span>
+<span style="font-family: monospace;">e.g.</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;"><br>
+</span><span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>help plot</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">gives help on the <span
+ style="color: rgb(0, 153, 0);">plot</span> command.<br>
+&nbsp;</span>
+<h3 style="color: rgb(51, 51, 255);"><a class="mozTocH3"
+ name="mozTocId458716"></a>USER COMMANDS</h3>
+<span style="font-family: monospace;">These are defined in the routine<br>
+<br>
+<span style="color: rgb(0, 153, 0);">usrcmd(char key[])</span></span><br>
+<br>
+<div style="text-align: justify;"><span style="font-family: monospace;">where
+<span style="color: rgb(0, 153, 0);">key</span> is a string
+variable containing the command. The user can add additional commands
+with or without
+arguments. Use the existing commands as templates. The current commands
+are</span><br style="font-family: monospace;">
+</div>
+&nbsp;
+<table style="width: 533px; height: 180px;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">pfloor value&nbsp;&nbsp; <br>
+      </span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>set
+pressure floor = value</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">dfloor value<br>
+      </span></td>
+      <td style="color: rgb(0, 153, 0);"><small><span
+ style="font-family: courier new,courier,monospace;"> set density floor
+=
+value&nbsp;</span></small><span style="font-family: monospace;"></span></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">kmin value</span><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">set minimu
+turbulence level (KEPS only)</span><span style="color: rgb(0, 153, 0);"></span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0);"></span><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">epsmin value</span>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">set minimum
+dissipation level (KEPS only)</span><span style="color: rgb(0, 153, 0);"></span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>avise
+value<br>
+      </small></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>set
+artificial heat conduction (default 0.2)<br>
+      </small></td>
+    </tr>
+    <tr>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>avism
+value<br>
+      </small></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>set
+artificial resistivity (MG_M,only default 0.2)<br>
+      </small></td>
+    </tr>
+    <tr>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>gamma
+value<br>
+      </small></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>ratio
+of specific heats
+(default 5/3)<br>
+      </small></td>
+    </tr>
+  </tbody>
+</table>
+&nbsp;<span style="font-family: monospace;"><br>
+</span>
+<div style="text-align: justify;">
+<div style="text-align: justify;"><span style="font-family: monospace;">Commands
+can have a number of arguments, which can be integer, real or
+strings. These are obtained
+from the input by get_i, get_r or get_n. When adding commands, make
+sure that the correct routine
+is used.</span><br>
+</div>
+<span style="font-family: monospace;"></span></div>
+<span style="font-family: monospace;">&nbsp;</span>
+<h3><a class="mozTocH3" name="mozTocId140572"></a><span
+ style="color: rgb(51, 51, 255);">OTHER COMMANDS</span></h3>
+<span style="font-family: monospace;">These are generic commands
+defined in the
+routine mgcmd in the file
+main.c They are</span><br style="font-family: monospace;">
+&nbsp;
+<table style="width: 835px; height: 1065px;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">admin</span><br>
+      </td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>switch
+on plotting every
+subtimestep</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">noadmin</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>switch
+off
+plotting every subtimestep</small></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">boundpot</span></td>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace;"><span style="color: rgb(0, 153, 0);">calculate
+boundary gravitational potential</span><br>
+      </span></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">noboundpot</span></td>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">switch off boundpot</span></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">boundl id
+condition</span><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">set left
+boundary condition for coordinate id to condition</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">boundr id
+condition</span></td>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">set right
+boundary condtion for coordinate id to condition</span></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">cn value</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>set
+courant number =
+value (default 0.4)<br>
+      </small></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">cnv value</span></td>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace;"><span style="color: rgb(0, 153, 0);">set
+viscous courant number = value (default 0.4)</span><br>
+      </span></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">cng value</span></td>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace;"><span style="color: rgb(0, 153, 0);">set
+gravitational courant number - value (default 0.01)<br>
+      </span></span></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">cnf value</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>coarse
+grid timestep
+fraction (default 0.9)</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">controls</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>show
+adaptive grid
+conrols</small></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><small
+ style="color: rgb(0, 153, 0);"><span
+ style="font-family: courier new,courier,monospace;">correct</span></small><br>
+      </td>
+      <td style="vertical-align: top;"><small><span
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;">switch
+on flux correction at coarse-fine boundaries (default)</span></small><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">nocorrect</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>switch
+off flux
+correction at coarse/fine boundaries</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">debug</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>switch
+on printing every
+subtimestep</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">nodebug</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>switch
+off
+printing every subtimestep (default)<br>
+      </small></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">declev</span><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace;"><span style="color: rgb(0, 153, 0);">decrease</span>
+      <span style="color: rgb(0, 153, 0);">number of levels by one</span><br>
+      </span></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">defrag</span></td>
+      <td style="color: rgb(0, 153, 0);"><small><span
+ style="font-family: courier new,courier,monospace;"> switch on
+grid defragmentation (default</span>)</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">nodefrag</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>switch
+off grid
+defragmentation</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">diffbad nsteps</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>diffuse
+badness by nsteps</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">nodiffbad</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>switch
+off badness
+diffusion</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">dump</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>switch
+on printing every
+coarse grid timestep</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">nodump</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>switch
+off
+printing every coarse grid timestep (default)<br>
+      </small></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><small
+ style="font-family: courier new,courier,monospace;"><span
+ style="color: rgb(0, 153, 0);">fast</span></small><br>
+      </td>
+      <td style="vertical-align: top;"><small
+ style="font-family: courier new,courier,monospace;"><span
+ style="color: rgb(0, 153, 0);">fast initialisation (default)<br>
+      </span></small></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><small
+ style="font-family: courier new,courier,monospace;"><span
+ style="color: rgb(0, 153, 0);">slow</span></small><br>
+      </td>
+      <td style="vertical-align: top;"><small
+ style="font-family: courier new,courier,monospace;"><span
+ style="color: rgb(0, 153, 0);">slow initialisation (must be before
+start command)</span></small><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>grav</small></td>
+      <td style="vertical-align: top;"><small><span
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;">switch
+on gravity</span><br>
+      </small></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">inclev</span><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace;"><span style="color: rgb(0, 153, 0);">increase</span>
+      <span style="color: rgb(0, 153, 0);">number of levels by one</span></span></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">lev nlev</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>select
+level nlev
+for plotting</small></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace;"><span style="color: rgb(0, 153, 0);">levb
+nlev</span><br>
+      </span></td>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace;"><span style="color: rgb(0, 153, 0);">set
+level for boundary potential calculation</span><br>
+      </span></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">levc nlev</span></td>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace;"><span style="color: rgb(0, 153, 0);">set
+coarsest complete level</span><br>
+      </span></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">levs min max</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>plot
+levels min to max (uses
+interpolation)</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">march nsteps</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>march
+for nsteps</small></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace;"><span style="color: rgb(0, 153, 0);">newdom
+left1 left2 left3 right1 right2 right3</span><br>
+      </span></td>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">set new domain
+boundaries to left1 etc. The new domain must be smaller</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-family: courier new,courier,monospace;"><small><span
+ style="color: rgb(0, 153, 0);">normrat value<br>
+      </span></small></td>
+      <td
+ style="vertical-align: top; font-family: courier new,courier,monospace;"><small><span
+ style="color: rgb(0, 153, 0);">set multigrid convergence tolerance
+= value (default 0.25)</span></small></td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; font-family: courier new,courier,monospace;"><small><span
+ style="color: rgb(0, 153, 0);">nrel number<br>
+      </span></small></td>
+      <td
+ style="vertical-align: top; font-family: courier new,courier,monospace;"><small><span
+ style="color: rgb(0, 153, 0);">set number of multigrid relaxations</span></small><small><span
+ style="color: rgb(0, 153, 0);"> = number (default 5)</span></small></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">part</span><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0);"></span><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">show partitions
+(parallel)</span> </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">prof</span><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">show timing
+information for parallel.</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">noprof</span><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">switch off
+parallel timing information (default).</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><small><span
+ style="font-family: courier new,courier,monospace; color: rgb(0, 153, 0);">q</span></small><br>
+      </td>
+      <td style="vertical-align: top;"><small><span
+ style="font-family: courier new,courier,monospace; color: rgb(0, 153, 0);">quit</span></small><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">read file</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>read
+model from
+file.dsb in directory $mg_g/data or $mg_m_data</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">remhole</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>remove
+holes in
+grid</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">noremhole</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>switch
+off remhole</small></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">remg0</span><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">remove the
+level 0 grid</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">rtol value</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>error
+tolerance (default 0.01)</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">show</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>show
+model information</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">start</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>create
+start model</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">stats</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>print
+information about memory and cpu usage</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">sum</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>sum
+variables over the grid
+(for levels set by levs)</small></td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">target value</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>set
+target time = value</small></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">timpart</span><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">Use timing
+information for parallel partitioning (default).</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">notimpart</span><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">Use cell count
+for parallel partitioning.</span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">users</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>show
+user information</small></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">work</span><br>
+      </td>
+      <td style="vertical-align: top;"><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">show partitions
+(parallel)</span><span style="color: rgb(0, 153, 0);"></span><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="color: rgb(0, 153, 0);"><span
+ style="font-family: monospace;">write file</span></td>
+      <td
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"><small>write
+model to file.dsb in
+directory $mg_g_data or $mg_m_data<br>
+      </small></td>
+    </tr>
+  </tbody>
+</table>
+<span style="font-family: monospace;"><br>
+</span><span style="font-family: monospace;">The input is almost
+completely
+free format - the arguments to a
+command need not be on the same line as the command e.g.</span><br
+ style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>plot
+u1 p</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">is the same as</span><br
+ style="font-family: monospace;">
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>plot</span><br
+ style="color: rgb(0, 153, 0); font-family: monospace;">
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>u1</span><br
+ style="color: rgb(0, 153, 0); font-family: monospace;">
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>p</span><br
+ style="font-family: monospace;">
+<br>
+<div style="text-align: justify;"><span style="font-family: monospace;">The
+command line can also be
+edited using the usual commands(e.g. ^K etc) and a history is kept
+which can be accessed by the up/down arrow
+keys as in the shell. To see a full description of the facilities
+look at the man page for
+readline. There are, however, some limitations: lines must not be
+longer than 100 characters;&nbsp; quoted strings must be on one line;
+system commands must be on one line. </span><br
+ style="font-family: monospace;">
+</div>
+<h2><a class="mozTocH2" name="mozTocId58802"></a>&nbsp;<span
+ style="color: rgb(51, 51, 255);">USER MODULE</span></h2>
+<span style="font-family: monospace;">The user routines are in the file
+<span style="color: rgb(0, 153, 0);">usr.c</span>. There are a number
+of these routines that the user is likely to want to change:</span><br
+ style="font-family: monospace;">
+<h3><a class="mozTocH3" name="mozTocId639859"></a><a class="mozTocH3"
+ name="usrqis"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrqis</span><span
+ style="font-family: monospace;"></span></h3>
+<div style="text-align: justify;"><span style="font-family: monospace;">This
+is used to set up the
+initial solution. It is given the x,
+y, z coordinates of a cell in <span style="color: rgb(0, 153, 0);">xc(nd)</span>
+with <span style="color: rgb(0, 153, 0);">xc(0) = x</span>, <span
+ style="color: rgb(0, 153, 0);">xc(1) = y</span>, <span
+ style="color: rgb(0, 153, 0);">xc(2) =
+z</span>. It must
+return the initial values of the
+primitive variables in pa according to the following scheme</span><br
+ style="font-family: monospace;">
+</div>
+<br>
+<span style="font-family: monospace; color: rgb(0, 153, 0);">pa[iqd]&nbsp;&nbsp;&nbsp;&nbsp;
+density of fluid</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">pa[iqu0+1]&nbsp;
+x velocity of
+fluid</span><br style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">pa[iqu0+2)&nbsp;
+y velocity of
+fluid</span><br style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">pa[iqu0+3]&nbsp;
+z velocity of
+fluid</span><br style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">pa[iqe]&nbsp;&nbsp;&nbsp;&nbsp;
+pressure of fluid</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">pa[iqb0+1]&nbsp;
+x component of
+magnetic field (MG_M only)</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">pa[iqb0+2]&nbsp;
+y component of
+magnetic field (MG_M only)</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">pa[iqb0+3]&nbsp;
+z component of
+magnetic field (MG_M only)<br>
+</span><span style="font-family: monospace; color: rgb(0, 153, 0);">pa[iqk]&nbsp;&nbsp;&nbsp;&nbsp;
+turbulent energy per unit mass (KEPS only)<br>
+</span><span style="font-family: monospace; color: rgb(0, 153, 0);">pa[iqeps]&nbsp;&nbsp;
+turbulent dissipation rate per unit mass (KEPS only)<br>
+</span><span style="font-family: monospace; color: rgb(0, 153, 0);">pa[iqie]&nbsp;&nbsp;&nbsp;
+internal energy per unit volume (only if INTEN command is invoked)</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">pa[iqal0+1]
+value of scalar 1</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">pa[iqal0+2]
+value of scalar 2 etc</span><br style="font-family: monospace;">
+<span style="font-family: monospace;"><br>
+</span>
+<div style="text-align: justify;"><span style="font-family: monospace;">Note
+that in MG_G the number of
+velocity components is equal to the
+number of dimensions, but in MG_M and MG_MV all three velocities exist
+whatever
+the number
+of dimensions.</span><span style="font-family: monospace;"> It </span><span
+ style="font-family: monospace;">contains a set of else
+if clauses that choose the particular initial data according to the
+value of case
+given in the <span style="color: rgb(0, 153, 0);">start</span>
+command. The size of this array is determined by MAXQ in struct.h.<br>
+</span>
+<h3><a class="mozTocH3" name="mozTocId837996"></a><a name="usrss"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrss</span><span
+ style="font-family: monospace;"></span></h3>
+<span style="font-family: monospace;">This is given the density and
+pressure (mg_g) density, pressure and filed components (mg_m). It must
+return the sound speed(s).<span style="color: rgb(0, 153, 0);"></span><span
+ style="color: rgb(0, 153, 0);"></span></span><br
+ style="font-family: monospace;">
+</div>
+<h3><a class="mozTocH3" name="mozTocId49061"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrqp</span><span
+ style="font-family: monospace;"></span></h3>
+<span style="font-family: monospace;">This is given the
+primitive variables in
+<span style="color: rgb(0, 153, 0);">pa</span> and must return the
+conserved variables in <span style="color: rgb(0, 153, 0);">qa</span>.
+The conservative variables are as follows<br>
+<br>
+</span><span style="font-family: monospace; color: rgb(0, 153, 0);">qa[iqd]&nbsp;&nbsp;&nbsp;&nbsp;
+density of fluid</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">qa[iqu0+1]&nbsp;
+x momentum of
+fluid</span><br style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">qa[iqu0+2)&nbsp;
+y momentum of
+fluid</span><br style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">qa[iqu0+3]&nbsp;
+z momentum of
+fluid</span><br style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">qa[iqe]&nbsp;&nbsp;&nbsp;&nbsp;
+total energy of fluid per unit volume (internal + kinetic + magnetic)</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">qa[iqb0+1]&nbsp;
+x component of
+magnetic field (MG_M only)</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">qa[iqb0+2]&nbsp;
+y component of
+magnetic field (MG_M only)</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">qa[iqb0+3]&nbsp;
+z component of
+magnetic field (MG_M only)<br>
+</span><span style="font-family: monospace; color: rgb(0, 153, 0);">qa[iqk]&nbsp;&nbsp;&nbsp;&nbsp;
+turbulent energy per unit volume (KEPS only)<br>
+</span><span style="font-family: monospace; color: rgb(0, 153, 0);">qa[iqeps]&nbsp;&nbsp;
+turbulent dissipation rate per unit volume (KEPS only)<br>
+</span><span style="font-family: monospace; color: rgb(0, 153, 0);">qa[iqie]&nbsp;&nbsp;&nbsp;
+internal energy per unit volume (only if INTEN command is invoked)</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">qa[iqal0+1]
+mass of scalar 1 per unit volume (i.e. density times&nbsp; pa[iqal0+1])
+</span><br style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">qa[iqal0+2]
+value of scalar 2 etc</span><br style="font-family: monospace;">
+<h3><a class="mozTocH3" name="mozTocId920926"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrpq</span><span
+ style="font-family: monospace;"></span></h3>
+<span style="font-family: monospace;">This is given the
+conserved variables in
+<span style="color: rgb(0, 153, 0);">qa</span> and must return the
+primitive variables in <span style="color: rgb(0, 153, 0);">pa</span>.
+It must
+be consistent with <span style="color: rgb(0, 153, 0);">usrqp</span>.</span><br
+ style="font-family: monospace;">
+<h3><a class="mozTocH3" name="mozTocId478665"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrfxq</span></h3>
+<div style="text-align: justify;"><span style="font-family: monospace;">This
+fixes up the conserved
+variables to ensure that the
+internal energy and density are positive. The density is
+set to dfloor if
+it is less than dfloor. The internal energy is set to
+(<span style="color: rgb(0, 153, 0);">pfloor</span> <span
+ style="color: rgb(0, 153, 0);">+ 1)</span> times the
+total kinetic and magnetic energy
+(MG_M, MG_MV). The routine is given the cell
+pointer, so that <span style="color: rgb(0, 153, 0);">cptr-&gt;xc</span>
+gives the cell
+positions. It can therefore be used to impose particular values in
+given regions.</span><br style="font-family: monospace;">
+</div>
+<h3><a class="mozTocH3" name="mozTocId741896"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrfxp</span></h3>
+<span style="color: rgb(51, 51, 255); font-family: monospace;"></span><span
+ style="font-family: monospace;">This fixes up the primitive variables
+to ensure that the
+pressure and density are positive. It follows the same rules as
+<span style="color: rgb(0, 153, 0);">usrfxq</span> and should be
+consistent with it.</span><br style="font-family: monospace;">
+<h3><a class="mozTocH3" name="mozTocId134532"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrps</span><span
+ style="font-family: monospace;"></span></h3>
+<div style="text-align: justify;"><span style="font-family: monospace;">This
+is given the string item
+which is determined by the plot command e.g.
+<span style="color: rgb(0, 153, 0);">plot u1</span> sets <span
+ style="color: rgb(0, 153, 0);">item = "U1"</span>. The user can
+define new plotting items using the existing code as a
+template.</span><br style="font-family: monospace;">
+<span style="font-family: monospace;"></span></div>
+<h3><a class="mozTocH3" name="mozTocId876653"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrsaf</span></h3>
+<span style="color: rgb(51, 51, 255); font-family: monospace;"></span><span
+ style="font-family: monospace;">This is given the values of the
+primitive variables and must return the corresponding
+value of the source term in the array
+so according to the following scheme</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace; color: rgb(0, 153, 0);">so[iqd]&nbsp;&nbsp;&nbsp;&nbsp;
+mass source for fluid</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">so[iqu0+1]&nbsp;
+x momentum
+source
+for fluid</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">so[iqu0+2]&nbsp;
+y momentum
+source
+for fluid</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">so[iqu0+3]&nbsp;
+z momentum
+source
+for fluid</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">so[iqe]&nbsp;&nbsp;&nbsp;&nbsp;
+energy source for fluid</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">so[iqal0+1]
+source for scalar 1</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">so[iqal0+2]
+source for scalar 2
+etc</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">In principle you could also
+have a source for the magnetic
+field in MG_M or MG_MV, but this would be weird</span><span
+ style="font-family: monospace; color: rgb(0, 153, 0);"></span><span
+ style="font-family: monospace;">. <span
+ style="font-family: monospace;">Note that</span></span> <span
+ style="color: rgb(0, 153, 0);">usrsaf</span>
+<span style="font-family: monospace;">is also given the cell
+position in</span> <span style="color: rgb(0, 153, 0);">cptr-&gt;xc[nd]</span>
+<span style="font-family: monospace;">and the</span> <span
+ style="font-family: monospace;">and conservative variables at the old
+time in </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">cptr-&gt;qa</span><span
+ style="font-family: monospace;">.</span> <span
+ style="font-family: monospace;"></span>
+<div style="text-align: justify;"><span style="font-family: monospace;"></span>
+<h3><a class="mozTocH3" name="mozTocId170987"></a><a name="usrref"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrref</span></h3>
+<div style="text-align: justify;"><span
+ style="color: rgb(51, 51, 255); font-family: monospace;"></span><span
+ style="font-family: monospace;">This routine calculates a reference
+solution based on the solution in the cell. This is used in usrqsol to
+decide upon refinement.</span><br style="font-family: monospace;">
+</div>
+</div>
+<h3><a class="mozTocH3" name="mozTocId655302"></a><a name="usrqsol"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrqsol</span></h3>
+<div style="text-align: justify;"><span
+ style="color: rgb(51, 51, 255); font-family: monospace;"></span><span
+ style="font-family: monospace;">This routine decides whether a
+cell should be refined
+or not. It is given the level and cell which is
+to be refined or
+derefined. It should return <span style="color: rgb(0, 153, 0);">qsol
+= badcell</span> if the cell
+needs to be refined, <span style="color: rgb(0, 153, 0);">qsol = good</span>
+otherwise. The conservative solution for the cell is in cptr-&gt;qa and
+cptr-&gt;pa contains the solution mapped down from the parent cell.
+These can then be compared in order to determine whether or not the
+cell should be refined.</span><br style="font-family: monospace;">
+</div>
+<h3><a class="mozTocH3" name="mozTocId45992"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrte</span></h3>
+<span style="font-family: monospace;">This function is given the
+primitive variables in <span style="color: rgb(0, 153, 0);">pa </span>and
+must
+return the fluid temperature.<br>
+</span>
+<h3><a class="mozTocH3" name="mozTocId288558"></a><a name="usrmu"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrmu</span></h3>
+<span style="font-family: monospace;">This function is given the
+primitive variables in <span style="color: rgb(0, 153, 0);">pa </span>and
+must
+return the fluid viscosity and diffusion coefficients.</span><span
+ style="font-weight: bold;"></span><span style="font-family: monospace;"><br>
+</span><span style="font-family: monospace;"></span>
+<h3 style="color: rgb(51, 51, 255);"><a class="mozTocH3"
+ name="mozTocId699332"></a><a name="usrkeps"></a><span
+ style="font-family: monospace;">usrkeps</span></h3>
+<span style="font-family: monospace;">This function sets
+the dimensionless parameters in the turbulence model.</span><br>
+<h3><a class="mozTocH3" name="mozTocId99653"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrbd</span></h3>
+<div style="text-align: justify;"><span style="font-family: monospace;">This
+applies the boundary
+conditions. It is given the
+direction, id, where id = 1 is a boundary at const x, 2, is for
+y, 3 is for z. The type
+of boundary is given by <span style="color: rgb(0, 153, 0);">bcl[id-1]</span>
+for the left and <span style="color: rgb(0, 153, 0);">bcr[id-1]</span>
+for the
+right. Here</span><br style="font-family: monospace;">
+</div>
+<br>
+<span style="font-family: monospace; color: rgb(0, 153, 0);">bcl, bcr =
+bcfree if the Start
+file has FREE</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">bcl, bcr =
+bcref if the Start
+file has SYMMETRY</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">bcl, bcr =
+bcper if the Start
+file has PERIODIC</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">bcl, bcr =
+bcfix if the Start
+file has FIX</span><br
+ style="font-family: monospace; color: rgb(0, 153, 0);">
+<span style="font-family: monospace; color: rgb(0, 153, 0);">bcl, bcr =
+bcwall if the Start
+file has WALL</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">The boundary is on the left for
+<span style="color: rgb(0, 153, 0);">bound=lebound</span>, on the right
+for
+<span style="color: rgb(0, 153, 0);">bound=rebound</span>. Note that
+this routine is not called for periodic
+boundary conditions.<br>
+</span>
+<h3><a class="mozTocH3" name="mozTocId158405"></a><a name="usrcmd"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrcmd</span></h3>
+<span style="font-family: monospace;">This contains the user defined
+commands.New commands should be adfded here using the existing code as
+a template.<span style="color: rgb(0, 153, 0);"></span></span><br
+ style="font-family: monospace;">
+<h3><a class="mozTocH3" name="mozTocId36092"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrprt</span></h3>
+<span style="font-family: monospace;">This prints user parameters.</span><br
+ style="font-family: monospace;">
+<h3><a class="mozTocH3" name="mozTocId17844"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrwr</span></h3>
+<span style="font-family: monospace;">This routine writes user
+parameters to a model file. Any new parameters that you define should
+be added to this.Note that the routine write_var is overloaded and
+comes in six versions for different types of variables:<br>
+<br>
+void write_var(char item[], float
+value)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+writes the single float, value, with name item<br>
+void write_var(char item[], int size, float
+value[])&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+ style="font-family: monospace;">writes a float array, value, with name
+item and size elements</span><br>
+<span style="font-family: monospace;">void write_var(char item[], int
+value);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="font-family: monospace;">writes a single int,
+value, with name item</span><br>
+<span style="font-family: monospace;">void write_var(char item[], int
+size, int value[]);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+ style="font-family: monospace;">writes an integer array, value, with
+name item and size elements</span><br>
+<span style="font-family: monospace;">void write_var(char item[], bool
+value);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="font-family: monospace;">writes a single bool,
+value, with name item</span><br>
+<span style="font-family: monospace;">void write_var(char item[], char
+value[]);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="font-family: monospace;">writes a string, value,
+with name item</span>
+<h3><a class="mozTocH3" name="mozTocId313953"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrrd</span></h3>
+<span style="font-family: monospace;">This routine reads user
+parameters from a model file. Any
+new parameters that you define should be added to this. As in usrwr,
+read_var is overloaded and comes in four versions for different types
+of variables:<br>
+<br>
+void read_var(float *value)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; reads a
+single float or float array, value<br>
+void read_var(int *value)&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+reads a single int or int array, value<br>
+void read_var(bool *value)&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; reads a
+single bool, value<br>
+void read_var(char *value)&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; reads a
+string, value<br>
+</span>
+<h3><a class="mozTocH3" name="mozTocId703359"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrsum</span><span
+ style="font-family: monospace;"></span></h3>
+<span style="font-family: monospace;">This
+sums variables over
+the grids with levels
+chosen by the <span style="color: rgb(0, 153, 0);">levs</span>
+command. It is invoked by the command <span
+ style="color: rgb(0, 153, 0);">sum</span>. At
+present it just sums all the conserved
+variables. This routine is also useful for examining the whole
+solution.</span><br>
+<h3><a class="mozTocH3" name="mozTocId678778"></a><a name="usrmon"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrmon</span></h3>
+<span style="font-family: monospace;">This function prints variables to
+the monitoring file set up by the <span style="color: rgb(0, 153, 0);">mon</span>
+command.<span style="color: rgb(0, 153, 0);"></span></span><br>
+<h3><a class="mozTocH3" name="mozTocId382162"></a><a name="usrdef"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usrdef</span></h3>
+<span style="font-family: monospace;">This function sets the defaults
+for the user parameters.<br>
+</span>
+<h3><a class="mozTocH3" name="mozTocId65296"></a><a name="usroff"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;">usroff</span></h3>
+<span style="font-family: monospace;">This function sets up the offsets
+to be used in the solution array. Although there is no reason to do so,
+these can all be changed except for the gravitational potential, iqpot,
+which is assumed to be nq-1.<br>
+<br>
+<br>
+<a name="usrquit"></a><big style="font-weight: bold;"><span
+ style="color: rgb(51, 51, 255);">usrquit<br>
+<br>
+</span></big></span><span style="font-family: monospace;"><span
+ style="color: rgb(0, 153, 0);"></span></span><span
+ style="font-family: monospace;"></span><span
+ style="font-family: monospace;">This is called whenever a new model is
+set up, either by the </span><span
+ style="color: rgb(0, 153, 0); font-family: monospace;">START </span><span
+ style="font-family: monospace;">command or by reading in a model. This
+is to give the user the opportunity to delete any dynamic arrays that
+have been defined.</span>
+<h3><a class="mozTocH3" name="mozTocId581069"></a> <span
+ style="color: rgb(51, 51, 255); font-family: monospace;">global user
+variables</span><br>
+<span style="color: rgb(51, 51, 255);"></span></h3>
+<div style="text-align: justify;"><span style="font-family: monospace;">Global
+user variables are defined in
+<span style="color: rgb(0, 153, 0);">user.h</span>. Note that these
+have to be declared twice, once as extern.</span><br>
+<span style="font-family: monospace;"></span></div>
+<span style="font-family: monospace;"><span style="color: rgb(0, 0, 0);"></span></span><span
+ style="font-family: monospace; color: rgb(0, 0, 0);"></span><br
+ style="font-family: monospace;">
+<h2><a class="mozTocH2" name="mozTocId301789"></a><span
+ style="color: rgb(51, 51, 255);">&nbsp;VISCOSITY, DIFFUSION and
+THERMAL CONDUCTION (MG_G or MG_MV only)</span></h2>
+<span style="font-family: monospace;">These are switched on and off by
+the commands</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;"><span
+ style="color: rgb(0, 153, 0);"><span style="color: rgb(204, 0, 0);">MG_G&gt;</span>viscous</span>
+(switch
+on)</span><br style="font-family: monospace;">
+<span style="font-family: monospace;"><span
+ style="color: rgb(0, 153, 0);"><span style="color: rgb(204, 0, 0);">MG_G&gt;</span>noviscous</span>
+(switch off)</span><br style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">The kinematic viscosity is set by</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace; color: rgb(0, 153, 0);"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>vis value</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">The scalar diffusion by</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace; color: rgb(0, 153, 0);"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>sdiff value</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace;">The thermal conductivity by</span><br
+ style="font-family: monospace;">
+<br>
+<span style="font-family: monospace; color: rgb(0, 153, 0);"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>tcond value</span><br
+ style="font-family: monospace;">
+<span style="font-family: monospace;"><br>
+In MG_MV the resistivity is set by<br>
+<br>
+</span><span style="font-family: monospace; color: rgb(0, 153, 0);"><span
+ style="color: rgb(204, 0, 0);">MG_MV&gt;</span>mdiff value</span><br>
+<span style="font-family: monospace;"><br>
+These are used to
+calculate dynamic coefficients by multiplying by the density in <span
+ style="color: rgb(0, 153, 0);">usrmu</span></span><span
+ style="font-family: monospace; color: rgb(0, 153, 0);"><span
+ style="color: rgb(204, 0, 0);"></span></span><span
+ style="font-family: monospace;"><span style="color: rgb(0, 153, 0);"> </span><span
+ style="color: rgb(0, 153, 0);"></span></span><span
+ style="font-family: monospace;">(except for mdiff)</span><span
+ style="font-family: monospace;">.<br>
+</span><br style="font-family: monospace;">
+<h2><a class="mozTocH2" name="mozTocId225404"></a>&nbsp;<span
+ style="color: rgb(51, 51, 255);">ADAPTIVE GRID</span></h2>
+<div style="text-align: justify;"><span style="font-family: monospace;">Levels
+0 and 1 fill the entire
+domain, but levels 2 and greater only
+exist where they are needed. Refinement depends on
+how rapidly
+the solution varies. For example, whether a level
+1 cell is refined to level 2 depends upon
+the fractional difference between the level 0</span><span
+ style="font-family: monospace;"> </span><span
+ style="font-family: monospace;">and level 1
+solution. If
+this exceeds <span style="color: rgb(0, 153, 0);">rtol</span>, then
+the cell is refined to
+level 2. Similarly, refinement
+to level 3 depends on the difference between levels 1
+and 2 and so on. </span><span style="font-family: monospace;">Each
+level has its own
+timestep subject to the restriction that the timestep on a level n is a
+power of 2
+smaller than that on level 0. If <span style="color: rgb(0, 153, 0);">debug
+</span>is on, then it shows the
+individual timesteps.Otherwise,
+all you see is the
+level 0 timestep if <span style="color: rgb(0, 153, 0);">dump</span>
+is on. There are two commands that control the general behaviour of the
+adaptive grid.</span><span style="font-family: monospace;"><span
+ style="font-weight: bold;"></span></span><br>
+<span style="font-family: monospace;"><span style="font-weight: bold;"></span></span></div>
+<span style="font-family: monospace;"> </span>
+<h3 style="color: rgb(51, 51, 255);"><a class="mozTocH3"
+ name="mozTocId732619"></a><span style="font-family: monospace;"><a
+ name="remhole"></a>Remhole</span></h3>
+<small><span style="font-family: courier new,courier,monospace;">This
+ensures that there are no holes i.e. no unrefined cells surrounded
+by refined cells.</span></small><span style="font-weight: bold;"></span><span
+ style="font-family: monospace;"></span>
+<h3><a class="mozTocH3" name="mozTocId557761"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;"><a
+ name="diffbad"></a>Diffbad</span></h3>
+<div style="text-align: justify;"><small><span
+ style="font-family: courier new,courier,monospace;">A cell that needs
+to be refined
+because its error exceeds the
+tolerance is given a value of </span><span
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;">qsol
+= 1</span><span style="font-family: courier new,courier,monospace;">.
+If diffbad is switched on, then </span><span
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;">nsteps</span><span
+ style="font-family: courier new,courier,monospace;"> of&nbsp; a
+diffusion
+operator is applied to </span><span
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;">qsol</span><span
+ style="font-family: courier new,courier,monospace;">.
+A cell is refined if </span><span
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;">qsol
+</span><span style="font-family: courier new,courier,monospace;">then
+exceeds </span><span
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;">refcrit
+</span><span style="font-family: courier new,courier,monospace;">and
+derefined if it is less than </span><span
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;">drefcrit</span><span
+ style="font-family: courier new,courier,monospace;">.
+This is designed to ensure that coarse-fine boundaries are smooth.</span></small><br>
+</div>
+<br>
+<span style="color: rgb(0, 153, 0); font-family: monospace;"><span
+ style="color: rgb(0, 0, 0);">The
+number of levels in the adaptive grid is also not fixed. The number of
+levels can be increased by one by the <span
+ style="color: rgb(0, 153, 0);">INCLEV</span> command and decreased by
+one by the <span style="color: rgb(0, 153, 0);">DECLEV</span> command.
+The coarsest grid (level 0) can be removed
+by the <span style="color: rgb(0, 153, 0);">REMG0</span> command. This
+also ensures that the old level 1 is fully refined.</span></span><br>
+<h2><a class="mozTocH2" name="mozTocId387364"></a> <span
+ style="color: rgb(51, 51, 255);">PARALLEL</span></h2>
+<div style="text-align: justify;"><small><span
+ style="font-family: courier new,courier,monospace;">The code has been
+parallelized using
+message passing. For npe
+processors, the computational domain is partitioned into npe parts by
+slicing perpendicular to the last coordinate direction that appears in
+the </span><span
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;">start
+</span><span style="font-family: courier new,courier,monospace;">command.
+The
+partitioning is on the finest grid, which means that parent and child
+cells near the processor boundaries are not necessarily on the same
+processor.&nbsp; The parallel code can be run either under smp or mpi.
+smp is intended for shared memory machines and for debugging, whereas
+mpi is needed for clusters.</span></small> <br>
+</div>
+<h3><a class="mozTocH3" name="mozTocId214352"></a><a name="smp1"></a><small><span
+ style="color: rgb(51, 51, 255);">smp</span></small><br>
+</h3>
+<small><span style="font-family: courier new,courier,monospace;">smp is
+implemented using Unix sockets and pipes and should run on
+any Unix machine.</span><span
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"></span><span
+ style="font-family: courier new,courier,monospace;"> To run mg_m with
+e.g. 4
+processors do</span></small><br>
+<br>
+<small><span style="font-family: courier new,courier,monospace;">smprun
+-npe=4 mg_m</span><br
+ style="font-family: courier new,courier,monospace;">
+<br style="font-family: courier new,courier,monospace;">
+</small>
+<div style="text-align: justify;"><small><span
+ style="font-family: courier new,courier,monospace;">This will bring up
+the command prompt
+in the </span><span
+ style="text-decoration: underline; font-family: courier new,courier,monospace;"></span><span
+ style="font-family: courier new,courier,monospace;">current window
+and also
+start up an xterm for each processor (this requires that xterm be
+installed). The programme runs exactly as before. There are some
+additi</span><span
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;"></span><span
+ style="font-family: courier new,courier,monospace;">onal commands to
+monitor the parallel behaviour:&nbsp; </span><span
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;">PART
+</span><span style="font-family: courier new,courier,monospace;">shows
+the current partitioning of the domain between processors,&nbsp; </span><span
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;">WORK</span><span
+ style="font-family: courier new,courier,monospace;"> shows the work
+done by each processor.&nbsp;
+The partitioning can be shown graphically by </span><span
+ style="color: rgb(0, 153, 0); font-family: courier new,courier,monospace;">plot
+proc p. <span style="color: rgb(0, 0, 0);">By default, the
+partitioning is done using timing information from each processor.This
+can be switched off so that only cell counts are used by <span
+ style="color: rgb(0, 153, 0);">NOTIMPART </span>and switched back on
+by <span style="color: rgb(0, 153, 0);">TIMPART</span>.</span> <span
+ style="color: rgb(0, 0, 0);">For calculations without gravity, there
+is little to choose between them, but <span
+ style="color: rgb(0, 153, 0);">TIMPART</span> is most appropriate for
+calculations with gravity since it ensures that the cost of the
+multigrid Poisson solver is properly taken into account.</span> </span></small><span
+ style="font-family: monospace;"><span style="color: rgb(0, 153, 0);"></span></span><span
+ style="color: rgb(0, 153, 0);"></span><br>
+</div>
+<span style="font-family: monospace;"><span style="font-weight: bold;"></span></span>
+<h3><a class="mozTocH3" name="mozTocId342515"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;"><a name="mpi"></a>mpi</span><br>
+<span style="color: rgb(51, 51, 255); font-family: monospace;"></span></h3>
+<div style="text-align: justify;"><small><span
+ style="font-family: courier new,courier,monospace;">This works exactly
+the same way,
+except that it does not bring up
+xterms for each processor.&nbsp; To run in interactive mode with e.g. 4
+processors do</span><br
+ style="font-family: courier new,courier,monospace;">
+<br style="font-family: courier new,courier,monospace;">
+<span style="font-family: courier new,courier,monospace;">mpiexec -n 4
+mg_m</span><br style="font-family: courier new,courier,monospace;">
+<br style="font-family: courier new,courier,monospace;">
+<span style="font-family: courier new,courier,monospace;"></span></small><small><span
+ style="font-family: courier new,courier,monospace;">To run </span></small><small><span
+ style="font-family: courier new,courier,monospace;">in
+batch mode, just put the run commands in a file, e.g. </span></small><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">do.dat</span><small><span
+ style="font-family: courier new,courier,monospace;"> and use this as
+input to the
+programme using the normal batch job submission for your installation.</span></small><span
+ style="font-family: courier new,courier,monospace;"><br>
+</span>
+<h3><a class="mozTocH3" name="mozTocId470553"></a><span
+ style="color: rgb(51, 51, 255); font-family: monospace;"><a
+ name="par_graph"></a>parallel graphics</span><br>
+<span style="color: rgb(51, 51, 255); font-family: monospace;"></span></h3>
+<small><span style="font-family: courier new,courier,monospace;">When
+running interactively, the graphics works in exactly the same way as
+for scalar. However, the entire graphics file is on the master
+processor and may exceed the physical memory size for three dimensional
+models with fine grids. It may also not be possible to run
+interactively with enough processors to load a large model. The way to
+get around this is to use the <span style="color: rgb(0, 153, 0);">export</span>
+and <span style="color: rgb(0, 153, 0);">readxq</span> facilities.
+During a three dimensional batch run you could have e.g.</span><span
+ style="font-family: courier new,courier,monospace;"></span><span
+ style="font-family: courier new,courier,monospace;"></span></small><small><span
+ style="font-family: courier new,courier,monospace;"></span></small><small><span
+ style="font-family: courier new,courier,monospace;"></span></small><span
+ style="font-family: monospace; color: rgb(0, 153, 0);"></span><small><span
+ style="font-family: courier new,courier,monospace;"></span></small><span
+ style="font-family: courier new,courier,monospace;"><br>
+</span><small><span style="font-family: courier new,courier,monospace;"><br>
+</span></small><span
+ style="font-family: monospace; color: rgb(0, 153, 0);"><span
+ style="color: rgb(204, 0, 0);">MG_G&gt;</span>mask z 0.1 export pg
+plot pg p</span><br>
+<small><span style="font-family: courier new,courier,monospace;"><br>
+in the </span></small><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">do.dat</span> <small><span
+ style="font-family: courier new,courier,monospace;">file. This will
+create a copy of the two dimensional plot of pg at z = 0.1 in a file </span></small><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">pg.xq</span><small><span
+ style="font-family: courier new,courier,monospace;">. This can later
+be examined using the </span></small><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">readxq </span><small><span
+ style="font-family: courier new,courier,monospace;">command. Note that
+you can mask when using </span></small><span
+ style="font-family: monospace; color: rgb(0, 153, 0);">readxq, </span><small><span
+ style="font-family: courier new,courier,monospace;">but you must use<br>
+</span></small><span
+ style="font-family: monospace; color: rgb(0, 153, 0);"><span
+ style="color: rgb(204, 0, 0);"><br>
+MG_G&gt;</span>maski id value</span><br>
+<small><span style="font-family: courier new,courier,monospace;"><br>
+where id is the coordinate number (1..nd) and value is the mask value.<br>
+</span></small><span
+ style="font-family: monospace; color: rgb(0, 153, 0);"> </span></div>
+</body>
+</html>

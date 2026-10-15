@@ -1,0 +1,80 @@
+#!/bin/tcsh -f
+if (-d mg_g) then
+  cd mg_g
+  ./Clear
+  if (-d .smp) then
+    ./Clearsmp
+  endif
+  cd ..
+endif
+if (-d mg_cti) then
+  cd mg_cti
+  ./Clear
+  if (-d .smp) then
+    ./Clearsmp
+  endif
+  cd ..
+endif
+if (-d mg_2p) then
+  cd mg_2p
+  ./Clear
+  if (-d .smp) then
+    ./Clearsmp
+  endif
+  cd ..
+endif
+if (-d mg_lem) then
+  cd mg_lem
+  ./Clear
+  if (-d .smp) then
+    ./Clearsmp
+  endif
+  cd ..
+endif
+if (-d mg_torch) then
+  cd mg_torch
+  ./Clear
+  if (-d .smp) then
+    ./Clearsmp
+  endif
+  cd ..
+endif
+if (-f src/linux/main.o) then
+  rm src/linux/*.o
+endif
+if (-f lib/muvi.a) then
+  rm lib/*.a
+endif
+if (-f lib/psplot/bhead) then
+  rm lib/psplot/bhead
+endif
+if (-f bin/mg_g) then
+  rm bin/mg_g
+endif
+if (-f bin/mg_cti) then
+  rm bin/mg_cti
+endif
+if (-f bin/mg_2p) then
+  rm bin/mg_2p
+endif
+if (-f bin/mg_lem) then
+  rm bin/mg_lem
+endif
+if (-f bin/mg_torch) then
+  rm bin/mg_torch
+endif
+cd $mg/mg_lem
+rm -r *~
+cd $mg/mg_torch
+rm -r *~
+cd $mg/mg_g
+rm -r *~
+cd $mg/mg_cti
+rm -r *~
+cd $mg/mg_2p
+rm -r *~
+cd $mg/src
+rm -r *~
+cd $mg
+rm -r *~
+
