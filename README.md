@@ -2,6 +2,7 @@
 
 This README documents the steps necessary to get your MG installation up and running.
 
+This repository only contains mg_torch, the supernova module of mg.
 
 ### What is MG? ###
 
